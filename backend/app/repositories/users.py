@@ -35,9 +35,10 @@ def create_user(db: Session, user_in: UserCreate) -> User:
     return user
 
 
-def update_user_profile(db: Session, user: User, name: str, email: str) -> User:
+def update_user_profile(db: Session, user: User, name: str, email: str, image: str | None = None) -> User:
     user.name = name
     user.email = email
+    user.image = image
     user.updated_at = datetime.now()
     db.commit()
     db.refresh(user)

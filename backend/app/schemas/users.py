@@ -14,6 +14,7 @@ class UserResponse(BaseModel):
     id: int
     name: str
     email: str
+    image: str | None = None
     provider: str
     provider_user_id: str
     created_at: datetime

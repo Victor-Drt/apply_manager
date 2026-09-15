@@ -122,6 +122,8 @@ def normalize_userinfo(provider: str, userinfo: dict) -> dict:
     provider_user_id = userinfo.get("sub")
     email = userinfo.get("email")
     name = userinfo.get("name") or userinfo.get("given_name") or email
+    picture = userinfo.get("picture")
+
     if not provider_user_id or not email:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -132,4 +134,5 @@ def normalize_userinfo(provider: str, userinfo: dict) -> dict:
         "email": email,
         "provider": provider,
         "provider_user_id": str(provider_user_id),
+        "picture": picture,
     }

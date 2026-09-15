@@ -30,8 +30,9 @@ def login_with_oauth_code(db: Session, provider: str, code: str) -> Token:
     if user is None:
         user = users_repository.create_user(db, UserCreate(**profile))
     else:
+        print(profile)
         user = users_repository.update_user_profile(
-            db, user, name=profile["name"], email=profile["email"]
+            db, user, name=profile["name"], email=profile["email"], image=profile["picture"]
         )
 
     access_token = create_access_token(
