@@ -4,19 +4,36 @@ import Login from './pages/Login'
 import { getStoredAccessToken } from './services/auth'
 import { BrowserRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import ApplicationsPage from './pages/Applications'
+import { useEffect, useState } from 'react'
+import { getUser } from './services/users'
+import type { User } from './types/users'
+
 
 function AppShell() {
   const location = useLocation()
   const isLoggedIn = Boolean(getStoredAccessToken())
+
+  const [user, setUser] = useState<User | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    getUser().then(setUser).catch(setError).finally(() => setIsLoading(false))
+  }, [])
+
+  console.log(user)
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error: {error.message}</div>
 
   return (
     <>
       {isLoggedIn ? (
         <aside className="navbar">
           <div className="profile-card-row">
-            <img className="profile-image" src="https://ui-avatars.com/api/?name=Jhon+Doe" alt="Profile" />
-            <h2 className="profile-name">John Doe</h2>
-            <p className="profile-email">john.doe@example.com</p>
+            <img className="profile-image" src={user?.image} alt="Profile" />
+            <h2 className="profile-name">{user?.name}</h2>
+            <p className="profile-email">{user?.email}</p>
             <button className="profile-button"><i className="fa-solid fa-bars">:</i></button>
           </div>
           <nav className="navbar-list">
