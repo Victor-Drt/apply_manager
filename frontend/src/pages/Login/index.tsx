@@ -1,14 +1,13 @@
 import { startGoogleLogin } from '../../services/auth'
 import { useEffect, useState } from 'react'
 import { consumeOAuthCallback, type OAuthCallbackResult } from '../../services/auth'
-import NaoFoiPossivel from '../NaoFoiPossivel'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
+import './styles.css'
 
 const Login = () => {
 
     const [oauthResult, setOauthResult] = useState<OAuthCallbackResult>({ status: 'idle' })
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
-    const navigate = useNavigate()
 
     useEffect(() => {
         const callbackTimer = window.setTimeout(() => {
@@ -27,14 +26,17 @@ const Login = () => {
     }
 
     return (
-        <div>
-            {errorMessage ? <span>{errorMessage}</span> : null}
+        <main className="login">
+            <div className="login-card">
+                {errorMessage ? <span className="login-error">{errorMessage}</span> : null}
 
-            <span>Faça Login com Google</span>
-            <button type="button" onClick={startGoogleLogin}>
-                <img src="https://download.logo.wine/logo/Google/Google-Logo.wine.png" alt="Google Logo" />
-            </button>
-        </div>
+                <span className="login-title">Faça Login com Google</span>
+                <button type="button" className="login-google" onClick={startGoogleLogin}>
+                    <img src="https://download.logo.wine/logo/Google/Google-Logo.wine.png" alt="" />
+                    Google
+                </button>
+            </div>
+        </main>
     )
 }
 
