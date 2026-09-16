@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import { getUser } from './services/users'
 import type { User } from './types/users'
 import ApplicationDetailPage from './pages/ApplicationDetail'
-
+import ApplicationCreatePage from './pages/ApplicationCreate'
 
 function AppShell() {
   const location = useLocation()
@@ -51,6 +51,7 @@ function AppShell() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/applications" element={<ApplicationsPage />} />
+        <Route path="/application/create" element={<ApplicationCreatePage />} />
         <Route path="/application/:id" element={<ApplicationDetailPage />} />
       </Routes>
     </>

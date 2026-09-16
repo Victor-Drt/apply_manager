@@ -27,6 +27,34 @@
   color: #333;
 }
 
+.applications-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.applications-create-button {
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.applications-create-button:hover,
+.applications-create-button:focus-visible {
+  background-color: #f0f0f0;
+}
+
 .applications-card table {
   display: block;
   width: 100%;
@@ -74,6 +102,10 @@
 
 .applications-card tbody tr:last-child td:last-child {
   border-radius: 0 0 8px 0;
+}
+
+.applications-card tbody tr {
+  cursor: pointer;
 }
 
 .applications-card tbody tr:hover {
