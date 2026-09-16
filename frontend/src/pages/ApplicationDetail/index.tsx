@@ -1,6 +1,8 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ApplicationDetailField from '../../components/ApplicationDetailField';
 import './styles.css'
+import DeleteApplicationModal from '../../components/DeleteApplicationModal';
 
 const initialApplication = {
     jobTitle: 'Software Engineer',
@@ -15,9 +17,11 @@ const initialApplication = {
 }
 
 const ApplicationDetailPage = () => {
+    const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
     const [application, setApplication] = useState(initialApplication);
     const [savedApplication, setSavedApplication] = useState(initialApplication);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleEdit = () => {
         setIsEditing(true);
@@ -42,8 +46,28 @@ const ApplicationDetailPage = () => {
         }));
     }
 
+    const handleDelete = () => {
+        setIsModalOpen(true);
+    }
+
+    const confirmDelete = () => {
+        setIsModalOpen(false);
+        navigate('/applications');
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    }
+
     return (
         <main className="content application-detail">
+            {isModalOpen && (
+                <DeleteApplicationModal
+                    onDelete={confirmDelete}
+                    onCancel={closeModal}
+                />
+            )}
+
             <form className="application-detail-card" onSubmit={handleSave}>
                 <h1>Application Detail</h1>
                 <div className="application-detail-fields">
@@ -66,7 +90,7 @@ const ApplicationDetailPage = () => {
                     ) : (
                         <>
                             <button type="button" className="application-detail-action-button" onClick={handleEdit}>Edit</button>
-                            <button type="button" className="application-detail-action-button">Delete</button>
+                            <button type="button" className="application-detail-action-button" onClick={handleDelete}>Delete</button>
                         </>
                     )}
                 </div>

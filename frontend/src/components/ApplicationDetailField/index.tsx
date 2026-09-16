@@ -1,4 +1,5 @@
 import type { ChangeEvent } from 'react';
+import './styles.css'
 
 export interface ApplicationDetailFieldProps {
     label: string;
