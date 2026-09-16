@@ -1,15 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import type { ApplicationRowProps } from '../ApplicationRow';
 import ApplicationRow from '../ApplicationRow';
 
 interface ApplicationsTableProps {
-    applications: ApplicationRowProps[];
+    applications: any[];
 }
 
 const ApplicationsTable = ({ applications }: ApplicationsTableProps) => {
+    const navigate = useNavigate();
+
     return (
         <div className="applications-card">
-            <h1>Applications</h1>
-
+            <div className="applications-card-header">
+                <h1>Applications</h1>
+                <button type="button" className="applications-create-button" onClick={() => navigate('/application/create')}>Create Application</button>
+            </div>
             <table>
                 <thead>
                     <tr>
