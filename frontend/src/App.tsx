@@ -7,40 +7,40 @@ import ApplicationsPage from './pages/Applications'
 import { useEffect, useState } from 'react'
 import { getUser } from './services/users'
 import type { User } from './types/users'
+import ApplicationDetailPage from './pages/ApplicationDetail'
 
 
 function AppShell() {
   const location = useLocation()
   const isLoggedIn = Boolean(getStoredAccessToken())
 
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  // const [user, setUser] = useState<User | null>(null)
+  // const [isLoading, setIsLoading] = useState(true)
+  // const [error, setError] = useState<Error | null>(null)
 
-  useEffect(() => {
-    getUser().then(setUser).catch(setError).finally(() => setIsLoading(false))
-  }, [])
+  // useEffect(() => {
+  //   getUser().then(setUser).catch(setError).finally(() => setIsLoading(false))
+  // }, [])
 
-  console.log(user)
+  // console.log(user)
 
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Error: {error.message}</div>
+  // if (isLoading) return <div>Loading...</div>
+  // if (error) return <div>Error: {error.message}</div>
 
   return (
     <>
       {isLoggedIn ? (
         <aside className="navbar">
           <div className="profile-card-row">
-            <img className="profile-image" src={user?.image} alt="Profile" />
-            <h2 className="profile-name">{user?.name}</h2>
-            <p className="profile-email">{user?.email}</p>
+            <img className="profile-image" src="https://ui-avatars.com/api/?name=User+Name" alt="Profile" />
+            <h2 className="profile-name">User Name</h2>
+            <p className="profile-email">user@example.com</p>
             <button className="profile-button"><i className="fa-solid fa-bars">:</i></button>
           </div>
           <nav className="navbar-list">
             <h2 className="navbar-title">Menu</h2>
             <ul className="navbar-list-items">
               <li><NavLink to="/home">Home</NavLink></li>
-              <li><NavLink to="/teste-router">Teste Router</NavLink></li>
               <li><NavLink to="/applications">Applications</NavLink></li>
             </ul>
           </nav>
@@ -51,6 +51,7 @@ function AppShell() {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/applications" element={<ApplicationsPage />} />
+        <Route path="/application/:id" element={<ApplicationDetailPage />} />
       </Routes>
     </>
   )

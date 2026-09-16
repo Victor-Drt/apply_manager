@@ -10,24 +10,36 @@
   align-items: stretch;
   justify-content: flex-start;
   gap: 16px;
-  height: auto;
   width: 100%;
   max-width: 1200px;
+  height: calc(100vh - 48px);
   margin: 0 auto;
   padding: 24px 16px;
   background-color: #fff;
   border-radius: 8px;
+  overflow: hidden;
 }
 
 .applications-card h1 {
+  flex-shrink: 0;
   font-size: 16px;
   font-weight: 700;
   color: #333;
 }
 
 .applications-card table {
+  display: block;
   width: 100%;
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
   border-collapse: collapse;
+}
+
+.applications-card thead,
+.applications-card tbody {
+  display: table;
+  width: 100%;
 }
 
 .applications-card th,
@@ -36,6 +48,7 @@
   padding: 10px 12px;
   font-size: 14px;
   color: #333;
+  white-space: nowrap;
 }
 
 .applications-card th {
@@ -80,6 +93,7 @@
   justify-content: flex-end;
   gap: 12px;
   height: auto;
+  flex-shrink: 0;
   padding: 4px 0 0;
 }
 
