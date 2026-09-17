@@ -26,12 +26,20 @@ function AppShell() {
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error.message}</div>
 
+  let profileImageUrl = "https://ui-avatars.com/api/?name="
+  if (user?.image) {
+    profileImageUrl = user.image
+  } else {
+    let names = user?.name.split(" ");
+    profileImageUrl = `https://ui-avatars.com/api/?name=${names?.[0]}+${names?.[1]}` || `https://ui-avatars.com/api/?name=${names?.[0]}`
+  }
+
   return (
     <>
       {isLoggedIn ? (
         <aside className="navbar">
           <div className="profile-card-row">
-            <img className="profile-image" src={user?.image} alt="Profile" />
+            <img className="profile-image" src={profileImageUrl} alt="Profile" />
             <h2 className="profile-name">{user?.name}</h2>
             <p className="profile-email">{user?.email}</p>
             <button className="profile-button"><i className="fa-solid fa-bars">:</i></button>
