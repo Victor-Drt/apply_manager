@@ -10,24 +10,64 @@
   align-items: stretch;
   justify-content: flex-start;
   gap: 16px;
-  height: auto;
   width: 100%;
   max-width: 1200px;
+  height: calc(100vh - 48px);
   margin: 0 auto;
   padding: 24px 16px;
   background-color: #fff;
   border-radius: 8px;
+  overflow: hidden;
 }
 
 .applications-card h1 {
+  flex-shrink: 0;
   font-size: 16px;
   font-weight: 700;
   color: #333;
 }
 
+.applications-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.applications-create-button {
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.applications-create-button:hover,
+.applications-create-button:focus-visible {
+  background-color: #f0f0f0;
+}
+
 .applications-card table {
+  display: block;
   width: 100%;
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
   border-collapse: collapse;
+}
+
+.applications-card thead,
+.applications-card tbody {
+  display: table;
+  width: 100%;
 }
 
 .applications-card th,
@@ -36,6 +76,7 @@
   padding: 10px 12px;
   font-size: 14px;
   color: #333;
+  white-space: nowrap;
 }
 
 .applications-card th {
@@ -63,6 +104,10 @@
   border-radius: 0 0 8px 0;
 }
 
+.applications-card tbody tr {
+  cursor: pointer;
+}
+
 .applications-card tbody tr:hover {
   background-color: #f0f0f0;
 }
@@ -80,6 +125,7 @@
   justify-content: flex-end;
   gap: 12px;
   height: auto;
+  flex-shrink: 0;
   padding: 4px 0 0;
 }
 
