@@ -36,6 +36,14 @@ def get_applications(
     return applications_service.get_applications(db, current_user.id, offset, limit)
 
 
+@router.get("/dashboard")
+def get_dashboard(
+    db: Annotated[Session, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> DashboardResponse:
+    return applications_service.get_dashboard(db, current_user.id)
+
+
 @router.get("/{application_id}")
 def get_application(
     application_id: int,
@@ -77,11 +85,3 @@ def delete_application(
     if result:
         return Response(status_code=204)
     return Response(status_code=404)
-
-
-@router.get("/dashboard")
-def get_dashboard(
-    db: Annotated[Session, Depends(get_db)],
-    current_user: Annotated[User, Depends(get_current_user)],
-) -> DashboardResponse:
-    return applications_service.get_dashboard(db, current_user.id)

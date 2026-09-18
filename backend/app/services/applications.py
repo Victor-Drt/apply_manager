@@ -65,6 +65,7 @@ def get_dashboard(db: Session, user_id: int) -> DashboardResponse:
         db, user_id, 5
     )
     total_applications = applications_repository.get_total_applications(db, user_id)
+    saved_applications = applications_repository.get_saved_applications(db, user_id)
     applied_applications = applications_repository.get_applied_applications(db, user_id)
     interviews_applications = applications_repository.get_interviews_applications(
         db, user_id
@@ -75,8 +76,12 @@ def get_dashboard(db: Session, user_id: int) -> DashboardResponse:
 
     return DashboardResponse(
         total_applications=total_applications,
+        saved_applications=saved_applications,
         applied_applications=applied_applications,
         interviews_applications=interviews_applications,
         rejected_applications=rejected_applications,
-        last_applications=latest_applications,
+        last_applications=[
+            ApplicationResponse.model_validate(application)
+            for application in latest_applications
+        ],
     )

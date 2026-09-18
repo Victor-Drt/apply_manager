@@ -80,6 +80,17 @@ def get_total_applications(db: Session, user_id: int) -> int:
     return db.query(Application).filter(Application.user_id == user_id).count()
 
 
+def get_saved_applications(db: Session, user_id: int) -> int:
+    return (
+        db.query(Application)
+        .filter(
+            Application.user_id == user_id,
+            Application.status == ApplicationStatus.SAVED,
+        )
+        .count()
+    )
+
+
 def get_applied_applications(db: Session, user_id: int) -> int:
     return (
         db.query(Application)

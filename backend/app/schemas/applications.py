@@ -53,6 +53,7 @@ class ApplicationResponse(BaseModel):
 
 class DashboardResponse(BaseModel):
     total_applications: int
+    saved_applications: int
     applied_applications: int
     interviews_applications: int
     rejected_applications: int
