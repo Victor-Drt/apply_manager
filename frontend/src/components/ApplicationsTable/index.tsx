@@ -1,14 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import ApplicationRow from '../ApplicationRow';
 import { useState } from 'react';
+import type { ApplicationResponse } from '../../types/application';
+import { getApplications } from '../../services/applications';
 
 interface ApplicationsTableProps {
-    applications: any[];
+    applications: ApplicationResponse[];
+    setApplications: (applications: ApplicationResponse[]) => void;
 }
 
 const PAGE_SIZE = 10
 
-const ApplicationsTable = ({ applications }: ApplicationsTableProps) => {
+const ApplicationsTable = ({ applications, setApplications }: ApplicationsTableProps) => {
     const navigate = useNavigate();
     const [offset, setOffset] = useState(0);
 
@@ -23,6 +26,8 @@ const ApplicationsTable = ({ applications }: ApplicationsTableProps) => {
 
     const handlePaginationPrevious = () => {
         setOffset((current) => Math.max(0, current - PAGE_SIZE))
+        getApplications(offset - PAGE_SIZE, PAGE_SIZE)
+        .then((applications) => setApplications(applications))
     }
 
     const handlePaginationNext = () => {
@@ -30,6 +35,8 @@ const ApplicationsTable = ({ applications }: ApplicationsTableProps) => {
             const nextOffset = current + PAGE_SIZE
             return nextOffset < total ? nextOffset : current
         })
+        getApplications(offset + PAGE_SIZE, PAGE_SIZE)
+        .then((applications) => setApplications(applications))
     }
 
     return (
@@ -66,7 +73,14 @@ const ApplicationsTable = ({ applications }: ApplicationsTableProps) => {
                         {pageItems.map((application) => (
                             <ApplicationRow
                                 key={application.id}
-                                {...application}
+                                id={application.id.toString()}
+                                jobTitle={application.job_title}
+                                companyName={application.company_name || ''}
+                                source={application.source}
+                                status={application.status}
+                                appliedAt={application.applied_at || ''}
+                                createdAt={application.created_at}
+                                updatedAt={application.updated_at || ''}
                             />
                         ))}
                     </tbody>

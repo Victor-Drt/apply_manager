@@ -5,12 +5,10 @@ export interface ApplicationRowProps {
     jobTitle: string;
     companyName: string;
     source: string;
-    applicationPlatform: string;
-    jobUrl: string;
     status: string;
     appliedAt: string;
-    notes: string;
     createdAt: string;
+    updatedAt: string;
 }
 
 const ApplicationRow = ({ id, jobTitle, companyName, source, status, appliedAt }: ApplicationRowProps) => {
