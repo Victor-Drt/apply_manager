@@ -160,6 +160,7 @@
 .navbar-list-items a {
   display: flex;
   align-items: center;
+  gap: 10px;
 
   min-height: 40px;
   padding: 0 12px;
@@ -174,6 +175,14 @@
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+}
+
+.navbar-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin: 0;
 }
 
 .navbar-list-items a:hover,

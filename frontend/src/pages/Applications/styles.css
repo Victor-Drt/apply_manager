@@ -148,6 +148,12 @@
   border-bottom: none;
 }
 
+.applications-card tbody tr.applications-table-empty {
+  text-align: center;
+  font-size: 13px;
+  color: #374151;
+}
+
 
 /* ========================================
    Column Sizing
