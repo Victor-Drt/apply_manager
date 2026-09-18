@@ -4,7 +4,7 @@ import ApplicationDetailField from '../../components/ApplicationDetailField';
 import './styles.css'
 import DeleteApplicationModal from '../../components/DeleteApplicationModal';
 import { deleteApplication, getApplication, updateApplication } from '../../services/applications';
-import type { ApplicationResponse } from '../../types/application';
+import { APPLICATION_STATUSES, isApplicationStatus, type ApplicationResponse, type ApplicationStatus } from '../../types/application';
 
 type ApplicationForm = {
     jobTitle: string;
@@ -12,7 +12,7 @@ type ApplicationForm = {
     source: string;
     applicationPlatform: string;
     jobUrl: string;
-    status: string;
+    status: ApplicationStatus;
     appliedAt: string;
     notes: string;
     createdAt: string;
@@ -26,7 +26,7 @@ const emptyApplication: ApplicationForm = {
     source: '',
     applicationPlatform: '',
     jobUrl: '',
-    status: '',
+    status: 'saved',
     appliedAt: '',
     notes: '',
     createdAt: '',
@@ -46,7 +46,7 @@ function toForm(application: ApplicationResponse): ApplicationForm {
         source: application.source ?? '',
         applicationPlatform: application.application_platform ?? '',
         jobUrl: application.job_url ?? '',
-        status: application.status ?? '',
+        status: isApplicationStatus(application.status) ? application.status : 'saved',
         appliedAt: toDateInputValue(application.applied_at),
         notes: application.notes ?? '',
         createdAt: toDateInputValue(application.created_at),
@@ -111,8 +111,8 @@ function validateApplication(application: ApplicationForm): ApplicationFormError
         errors.jobUrl = 'Informe um link válido, começando com http:// ou https://.'
     }
 
-    if (status.length > 100) {
-        errors.status = 'O status deve ter no máximo 100 caracteres.'
+    if (!isApplicationStatus(status)) {
+        errors.status = 'Selecione um status válido.'
     }
 
     if (appliedAt && !isValidDate(appliedAt)) {
@@ -210,7 +210,7 @@ const ApplicationDetailPage = () => {
                 source: application.source.trim(),
                 application_platform: application.applicationPlatform.trim(),
                 job_url: application.jobUrl.trim(),
-                status: application.status.trim() || 'saved',
+                status: isApplicationStatus(application.status) ? application.status : 'saved',
                 applied_at: application.appliedAt.trim() || null,
                 notes: application.notes.trim() || null,
             });
@@ -226,7 +226,7 @@ const ApplicationDetailPage = () => {
         }
     }
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target
         setApplication((current) => ({
             ...current,
@@ -276,7 +276,7 @@ const ApplicationDetailPage = () => {
                     <ApplicationDetailField label="Source" value={application.source} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.source} maxLength={100} />
                     <ApplicationDetailField label="Application Platform" value={application.applicationPlatform} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.applicationPlatform} maxLength={100} />
                     <ApplicationDetailField label="Job URL" value={application.jobUrl} wide onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.jobUrl} inputType="url" maxLength={2048} />
-                    <ApplicationDetailField label="Status" value={application.status} onChange={handleChange} disabled={fieldsDisabled} error={fieldErrors.status} maxLength={100} />
+                    <ApplicationDetailField label="Status" value={application.status} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.status} options={APPLICATION_STATUSES} />
                     <ApplicationDetailField label="Applied At" value={application.appliedAt} onChange={handleChange} disabled={fieldsDisabled} error={fieldErrors.appliedAt} inputType="date" />
                     <ApplicationDetailField label="Notes" value={application.notes} wide onChange={handleChange} disabled={fieldsDisabled} />
                     <ApplicationDetailField label="Created At" value={application.createdAt} disabled />

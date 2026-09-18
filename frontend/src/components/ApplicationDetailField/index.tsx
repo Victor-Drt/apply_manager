@@ -1,6 +1,11 @@
 import type { ChangeEvent } from 'react';
 import './styles.css'
 
+export interface ApplicationDetailFieldOption {
+    value: string;
+    label: string;
+}
+
 export interface ApplicationDetailFieldProps {
     label: string;
     value: string;
@@ -11,7 +16,8 @@ export interface ApplicationDetailFieldProps {
     required?: boolean;
     inputType?: string;
     maxLength?: number;
-    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    options?: readonly ApplicationDetailFieldOption[];
+    onChange?: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
 const ApplicationDetailField = ({
@@ -24,29 +30,51 @@ const ApplicationDetailField = ({
     required = false,
     inputType = 'text',
     maxLength,
+    options,
     onChange,
 }: ApplicationDetailFieldProps) => {
     const fieldId = label.toLowerCase().replace(/\s+/g, '-')
     const fieldName = name ?? fieldId.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase())
     const errorId = `${fieldId}-error`
+    const fieldClassName = error ? 'is-invalid' : undefined
 
     return (
         <div className={wide ? 'application-detail-field application-detail-field-wide' : 'application-detail-field'}>
             <label htmlFor={fieldId}>{label}{required ? ' *' : ''}</label>
-            <input
-                id={fieldId}
-                name={fieldName}
-                type={inputType}
-                placeholder={label}
-                disabled={disabled}
-                value={value}
-                onChange={onChange}
-                required={required}
-                maxLength={maxLength}
-                aria-invalid={Boolean(error)}
-                aria-describedby={error ? errorId : undefined}
-                className={error ? 'is-invalid' : undefined}
-            />
+            {options ? (
+                <select
+                    id={fieldId}
+                    name={fieldName}
+                    disabled={disabled}
+                    value={value}
+                    onChange={onChange}
+                    required={required}
+                    aria-invalid={Boolean(error)}
+                    aria-describedby={error ? errorId : undefined}
+                    className={fieldClassName}
+                >
+                    {options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </select>
+            ) : (
+                <input
+                    id={fieldId}
+                    name={fieldName}
+                    type={inputType}
+                    placeholder={label}
+                    disabled={disabled}
+                    value={value}
+                    onChange={onChange}
+                    required={required}
+                    maxLength={maxLength}
+                    aria-invalid={Boolean(error)}
+                    aria-describedby={error ? errorId : undefined}
+                    className={fieldClassName}
+                />
+            )}
             {error ? <span id={errorId} className="application-detail-field-error">{error}</span> : null}
         </div>
     );

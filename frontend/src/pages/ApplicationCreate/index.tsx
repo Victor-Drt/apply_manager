@@ -2,6 +2,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import ApplicationDetailField from "../../components/ApplicationDetailField";
 import { useNavigate } from "react-router-dom";
 import { createApplication } from "../../services/applications";
+import { APPLICATION_STATUSES, isApplicationStatus, type ApplicationStatus } from "../../types/application";
 import "./styles.css";
 
 type ApplicationForm = {
@@ -10,7 +11,7 @@ type ApplicationForm = {
     source: string;
     applicationPlatform: string;
     jobUrl: string;
-    status: string;
+    status: ApplicationStatus;
     appliedAt: string;
     notes: string;
 }
@@ -23,7 +24,7 @@ const emptyApplication: ApplicationForm = {
     source: '',
     applicationPlatform: '',
     jobUrl: '',
-    status: '',
+    status: 'saved',
     appliedAt: '',
     notes: '',
 }
@@ -86,8 +87,8 @@ function validateApplication(application: ApplicationForm): ApplicationFormError
         errors.jobUrl = 'Informe um link válido, começando com http:// ou https://.'
     }
 
-    if (status.length > 100) {
-        errors.status = 'O status deve ter no máximo 100 caracteres.'
+    if (!isApplicationStatus(status)) {
+        errors.status = 'Selecione um status válido.'
     }
 
     if (appliedAt && !isValidDate(appliedAt)) {
@@ -124,7 +125,7 @@ const ApplicationCreatePage = () => {
                 source: application.source.trim(),
                 application_platform: application.applicationPlatform.trim(),
                 job_url: application.jobUrl.trim(),
-                status: application.status.trim() || 'saved',
+                status: isApplicationStatus(application.status) ? application.status : 'saved',
                 applied_at: application.appliedAt.trim() || null,
                 notes: application.notes.trim() || null,
             });
@@ -136,7 +137,7 @@ const ApplicationCreatePage = () => {
         }
     }
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target
         setApplication({
             ...application,
@@ -162,7 +163,7 @@ const ApplicationCreatePage = () => {
                     <ApplicationDetailField label="Source" value={application.source} onChange={handleChange} required error={fieldErrors.source} maxLength={100} />
                     <ApplicationDetailField label="Application Platform" value={application.applicationPlatform} onChange={handleChange} required error={fieldErrors.applicationPlatform} maxLength={100} />
                     <ApplicationDetailField label="Job URL" value={application.jobUrl} wide onChange={handleChange} required error={fieldErrors.jobUrl} inputType="url" maxLength={2048} />
-                    <ApplicationDetailField label="Status" value={application.status} onChange={handleChange} error={fieldErrors.status} maxLength={100} />
+                    <ApplicationDetailField label="Status" value={application.status} onChange={handleChange} required error={fieldErrors.status} options={APPLICATION_STATUSES} />
                     <ApplicationDetailField label="Applied At" value={application.appliedAt} onChange={handleChange} error={fieldErrors.appliedAt} inputType="date" />
                     <ApplicationDetailField label="Notes" value={application.notes} wide onChange={handleChange} />
                 </div>

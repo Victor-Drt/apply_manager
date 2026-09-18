@@ -1,5 +1,8 @@
-from pydantic import BaseModel, ConfigDict
 from datetime import datetime
+
+from pydantic import BaseModel, ConfigDict
+
+from app.models.applications import ApplicationStatus
 
 
 class Application(BaseModel):
@@ -8,9 +11,11 @@ class Application(BaseModel):
     source: str
     application_platform: str
     job_url: str
-    status: str = "saved"
+    status: ApplicationStatus = ApplicationStatus.SAVED
     applied_at: datetime | None = None
     notes: str | None = None
+
+    model_config = ConfigDict(use_enum_values=True)
 
 
 class ApplicationCreate(Application):
@@ -23,9 +28,11 @@ class ApplicationUpdate(BaseModel):
     source: str | None = None
     application_platform: str | None = None
     job_url: str | None = None
-    status: str | None = None
+    status: ApplicationStatus | None = None
     applied_at: datetime | None = None
     notes: str | None = None
+
+    model_config = ConfigDict(use_enum_values=True)
 
 
 class ApplicationResponse(BaseModel):
@@ -36,10 +43,10 @@ class ApplicationResponse(BaseModel):
     source: str
     application_platform: str
     job_url: str
-    status: str
+    status: ApplicationStatus
     applied_at: datetime | None = None
     notes: str | None = None
     created_at: datetime
     updated_at: datetime | None = None
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True, use_enum_values=True)

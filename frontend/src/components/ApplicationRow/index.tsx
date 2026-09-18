@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { getApplicationStatusLabel } from '../../types/application';
 
 export interface ApplicationRowProps {
     id: string;
@@ -19,7 +20,7 @@ const ApplicationRow = ({ id, jobTitle, companyName, source, status, appliedAt }
             <td>{jobTitle}</td>
             <td>{companyName}</td>
             <td>{source}</td>
-            <td>{status}</td>
+            <td>{getApplicationStatusLabel(status)}</td>
             <td>{appliedAt}</td>
         </tr>
     )

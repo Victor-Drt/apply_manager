@@ -1,3 +1,25 @@
+const APPLICATION_STATUSES = [
+    { value: 'saved', label: 'Salva' },
+    { value: 'applied', label: 'Aplicada' },
+    { value: 'interview', label: 'Entrevista' },
+    { value: 'technical_test', label: 'Teste técnico' },
+    { value: 'offer', label: 'Oferta' },
+    { value: 'hired', label: 'Contratado' },
+    { value: 'rejected', label: 'Rejeitada' },
+    { value: 'withdrawn', label: 'Desistência' },
+    { value: 'no_response', label: 'Sem resposta' },
+] as const
+
+type ApplicationStatus = (typeof APPLICATION_STATUSES)[number]['value']
+
+function isApplicationStatus(value: string): value is ApplicationStatus {
+    return APPLICATION_STATUSES.some((status) => status.value === value)
+}
+
+function getApplicationStatusLabel(value: string) {
+    return APPLICATION_STATUSES.find((status) => status.value === value)?.label ?? value
+}
+
 interface ApplicationResponse {
     id: number
     job_title: string
@@ -5,7 +27,7 @@ interface ApplicationResponse {
     source: string
     application_platform: string
     job_url: string
-    status: string
+    status: ApplicationStatus
     applied_at: string | null
     notes: string | null
     created_at: string
@@ -18,7 +40,7 @@ interface ApplicationCreate {
     source: string
     application_platform: string
     job_url: string
-    status: string
+    status: ApplicationStatus
     applied_at: string | null
     notes: string | null
 }
@@ -29,9 +51,10 @@ interface ApplicationUpdate {
     source?: string
     application_platform?: string
     job_url?: string
-    status?: string
+    status?: ApplicationStatus
     applied_at?: string | null
     notes?: string | null
 }
 
-export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate }
+export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate, ApplicationStatus }
+export { APPLICATION_STATUSES, isApplicationStatus, getApplicationStatusLabel }
