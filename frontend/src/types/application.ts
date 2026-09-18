@@ -3,8 +3,11 @@ interface ApplicationResponse {
     job_title: string
     company_name: string | null
     source: string
+    application_platform: string
+    job_url: string
     status: string
     applied_at: string | null
+    notes: string | null
     created_at: string
     updated_at: string | null
 }
@@ -20,4 +23,15 @@ interface ApplicationCreate {
     notes: string | null
 }
 
-export type { ApplicationResponse, ApplicationCreate }
+interface ApplicationUpdate {
+    job_title?: string
+    company_name?: string | null
+    source?: string
+    application_platform?: string
+    job_url?: string
+    status?: string
+    applied_at?: string | null
+    notes?: string | null
+}
+
+export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate }

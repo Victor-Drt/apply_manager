@@ -34,8 +34,11 @@ class ApplicationResponse(BaseModel):
     job_title: str
     company_name: str | None = None
     source: str
+    application_platform: str
+    job_url: str
     status: str
     applied_at: datetime | None = None
+    notes: str | None = None
     created_at: datetime
     updated_at: datetime | None = None
 

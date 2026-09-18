@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.orm import Session
 
 import app.services.applications as applications_service
@@ -36,8 +36,11 @@ def get_application(
     application_id: int,
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
-):
-    return applications_service.get_application(db, application_id, current_user.id)
+) -> ApplicationResponse:
+    application = applications_service.get_application(db, application_id, current_user.id)
+    if application is None:
+        raise HTTPException(status_code=404, detail="Candidatura não encontrada.")
+    return application
 
 
 @router.put("/{application_id}")

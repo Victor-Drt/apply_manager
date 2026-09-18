@@ -29,13 +29,7 @@ def get_application(db: Session, application_id: int, user_id: int) -> Applicati
     application = applications_repository.get_application(db, application_id, user_id)
     if application is None:
         return None
-    return ApplicationResponse(
-        id=application.id,
-        user_id=application.user_id,
-        job_title=application.job_title,
-        created_at=application.created_at,
-        updated_at=application.updated_at,
-    )
+    return ApplicationResponse.model_validate(application)
 
 
 def update_application(
@@ -50,13 +44,7 @@ def update_application(
     )
     if updated is None:
         return None
-    return ApplicationResponse(
-        id=updated.id,
-        user_id=updated.user_id,
-        job_title=updated.job_title,
-        created_at=updated.created_at,
-        updated_at=updated.updated_at,
-    )
+    return ApplicationResponse.model_validate(updated)
 
 
 def delete_application(db: Session, application_id: int, user_id: int) -> None:
