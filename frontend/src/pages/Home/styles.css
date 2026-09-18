@@ -203,6 +203,14 @@
   padding: 16px 0;
 
   border-bottom: 1px solid #f0f0f0;
+  cursor: pointer;
+}
+
+.applications-list-empty {
+  margin: 0;
+  font-size: 13px;
+  color: #9ca3af;
+  height: auto;
 }
 
 .application-item:first-child {

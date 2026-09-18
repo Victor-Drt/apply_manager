@@ -56,5 +56,15 @@ interface ApplicationUpdate {
     notes?: string | null
 }
 
-export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate, ApplicationStatus }
+interface DashboardResponse {
+    total_applications: number
+    saved_applications: number
+    applied_applications: number
+    interviews_applications: number
+    rejected_applications: number
+    last_applications: ApplicationResponse[]
+}
+
+
+export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate, ApplicationStatus, DashboardResponse }
 export { APPLICATION_STATUSES, isApplicationStatus, getApplicationStatusLabel }

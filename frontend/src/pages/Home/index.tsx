@@ -1,10 +1,60 @@
+import { getDashboard } from "../../services/applications";
 import "./styles.css"
 import { useNavigate, NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { getApplicationStatusLabel, type DashboardResponse } from "../../types/application";
 
+const STATUS_BADGES = ['saved', 'applied', 'interview', 'rejected'] as const
+type StatusBadge = (typeof STATUS_BADGES)[number]
+
+function formatApplicationDate(value: string | null | undefined) {
+    if (!value) {
+        return ''
+    }
+
+    const date = new Date(value)
+    if (Number.isNaN(date.getTime())) {
+        return value.slice(0, 10)
+    }
+
+    return date.toLocaleDateString('pt-BR')
+}
+
+function getCompanyInitial(companyName: string | null, jobTitle: string) {
+    const source = companyName?.trim() || jobTitle.trim()
+    return source ? source.charAt(0).toUpperCase() : '?'
+}
+
+function getStatusModifier(status: string): StatusBadge {
+    return STATUS_BADGES.includes(status as StatusBadge) ? status as StatusBadge : 'saved'
+}
+
+function getStatusPercent(count: number, total: number) {
+    if (total <= 0) {
+        return 0
+    }
+
+    return Math.round((count / total) * 100)
+}
 
 const HomePage = () => {
 
     const navigate = useNavigate();
+
+    const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
+
+    useEffect(() => {
+        getDashboard().then((data) => setDashboard(data)).catch((error) => console.error(error));
+    }, []);
+
+    const recentApplications = dashboard?.last_applications ?? []
+    const totalApplications = dashboard?.total_applications ?? 0
+    const statusOverview = [
+        { key: 'saved', label: 'Salvas', count: dashboard?.saved_applications ?? 0 },
+        { key: 'applied', label: 'Aplicadas', count: dashboard?.applied_applications ?? 0 },
+        { key: 'interview', label: 'Entrevistas', count: dashboard?.interviews_applications ?? 0 },
+        { key: 'rejected', label: 'Rejeitadas', count: dashboard?.rejected_applications ?? 0 },
+    ] as const
 
     return (
 
@@ -52,7 +102,7 @@ const HomePage = () => {
                         </div>
 
                         <strong className="summary-card__value">
-                            42
+                            {dashboard?.total_applications || 0}
                         </strong>
 
                         <span className="summary-card__description">
@@ -72,7 +122,7 @@ const HomePage = () => {
                         </div>
 
                         <strong className="summary-card__value">
-                            28
+                            {dashboard?.applied_applications || 0}
                         </strong>
 
                         <span className="summary-card__description">
@@ -92,7 +142,7 @@ const HomePage = () => {
                         </div>
 
                         <strong className="summary-card__value">
-                            5
+                            {dashboard?.interviews_applications || 0}
                         </strong>
 
                         <span className="summary-card__description">
@@ -112,7 +162,7 @@ const HomePage = () => {
                         </div>
 
                         <strong className="summary-card__value">
-                            9
+                            {dashboard?.rejected_applications || 0}
                         </strong>
 
                         <span className="summary-card__description">
@@ -143,123 +193,48 @@ const HomePage = () => {
                     </div>
 
                     <div className="applications-list">
+                        {recentApplications.length > 0 ? recentApplications.map((application) => {
+                            const statusModifier = getStatusModifier(application.status)
+                            const applicationDate = formatApplicationDate(application.applied_at || application.created_at)
 
-                        <article className="application-item">
-                            <div className="application-item__info">
+                            return (
+                                <article
+                                    key={application.id}
+                                    className="application-item"
+                                    onClick={() => navigate(`/application/${application.id}`)}
+                                >
+                                    <div className="application-item__info">
+                                        <div className="application-item__company-icon">
+                                            {getCompanyInitial(application.company_name, application.job_title)}
+                                        </div>
 
-                                <div className="application-item__company-icon">
-                                    A
-                                </div>
+                                        <div className="application-item__details">
+                                            <h3 className="application-item__title">
+                                                {application.job_title}
+                                            </h3>
 
-                                <div className="application-item__details">
-                                    <h3 className="application-item__title">
-                                        Desenvolvedor Backend Python
-                                    </h3>
+                                            <span className="application-item__company">
+                                                {application.company_name || 'Empresa não informada'}
+                                            </span>
+                                        </div>
+                                    </div>
 
-                                    <span className="application-item__company">
-                                        Empresa Alpha
-                                    </span>
-                                </div>
-                            </div>
+                                    <div className="application-item__meta">
+                                        <span className={`application-status application-status--${statusModifier}`}>
+                                            {getApplicationStatusLabel(application.status)}
+                                        </span>
 
-                            <div className="application-item__meta">
-                                <span className="application-status application-status--interview">
-                                    Entrevista
-                                </span>
-
-                                <time className="application-item__date">
-                                    15/09/2026
-                                </time>
-                            </div>
-                        </article>
-
-                        <article className="application-item">
-                            <div className="application-item__info">
-
-                                <div className="application-item__company-icon">
-                                    B
-                                </div>
-
-                                <div className="application-item__details">
-                                    <h3 className="application-item__title">
-                                        Desenvolvedor Python
-                                    </h3>
-
-                                    <span className="application-item__company">
-                                        Empresa Beta
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="application-item__meta">
-                                <span className="application-status application-status--applied">
-                                    Aplicada
-                                </span>
-
-                                <time className="application-item__date">
-                                    14/09/2026
-                                </time>
-                            </div>
-                        </article>
-
-                        <article className="application-item">
-                            <div className="application-item__info">
-
-                                <div className="application-item__company-icon">
-                                    G
-                                </div>
-
-                                <div className="application-item__details">
-                                    <h3 className="application-item__title">
-                                        Desenvolvedor Full Stack
-                                    </h3>
-
-                                    <span className="application-item__company">
-                                        Empresa Gamma
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="application-item__meta">
-                                <span className="application-status application-status--rejected">
-                                    Rejeitada
-                                </span>
-
-                                <time className="application-item__date">
-                                    12/09/2026
-                                </time>
-                            </div>
-                        </article>
-
-                        <article className="application-item">
-                            <div className="application-item__info">
-
-                                <div className="application-item__company-icon">
-                                    D
-                                </div>
-
-                                <div className="application-item__details">
-                                    <h3 className="application-item__title">
-                                        Backend Developer
-                                    </h3>
-
-                                    <span className="application-item__company">
-                                        Empresa Delta
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div className="application-item__meta">
-                                <span className="application-status application-status--saved">
-                                    Salva
-                                </span>
-
-                                <time className="application-item__date">
-                                    10/09/2026
-                                </time>
-                            </div>
-                        </article>
-
+                                        {applicationDate ? (
+                                            <time className="application-item__date" dateTime={application.applied_at || application.created_at}>
+                                                {applicationDate}
+                                            </time>
+                                        ) : null}
+                                    </div>
+                                </article>
+                            )
+                        }) : (
+                            <p className="applications-list-empty">Nenhuma candidatura cadastrada ainda.</p>
+                        )}
                     </div>
                 </div>
 
@@ -279,92 +254,33 @@ const HomePage = () => {
                     </div>
 
                     <div className="status-list">
+                        {statusOverview.map((status) => (
+                            <div className="status-item" key={status.key}>
+                                <div className="status-item__header">
+                                    <div className="status-item__label">
+                                        <span className={`status-dot status-dot--${status.key}`}></span>
+                                        {status.label}
+                                    </div>
 
-                        <div className="status-item">
-                            <div className="status-item__header">
-                                <div className="status-item__label">
-                                    <span className="status-dot status-dot--saved"></span>
-                                    Salvas
+                                    <strong className="status-item__value">
+                                        {status.count}
+                                    </strong>
                                 </div>
 
-                                <strong className="status-item__value">
-                                    8
-                                </strong>
-                            </div>
-
-                            <div className="status-item__bar">
-                                <span
-                                    className="status-item__progress status-item__progress--saved"
-                                    style={{ width: "19%" }}
-                                ></span>
-                            </div>
-                        </div>
-
-                        <div className="status-item">
-                            <div className="status-item__header">
-                                <div className="status-item__label">
-                                    <span className="status-dot status-dot--applied"></span>
-                                    Aplicadas
+                                <div className="status-item__bar">
+                                    <span
+                                        className={`status-item__progress status-item__progress--${status.key}`}
+                                        style={{ width: `${getStatusPercent(status.count, totalApplications)}%` }}
+                                    ></span>
                                 </div>
-
-                                <strong className="status-item__value">
-                                    28
-                                </strong>
                             </div>
-
-                            <div className="status-item__bar">
-                                <span
-                                    className="status-item__progress status-item__progress--applied"
-                                    style={{ width: "67%" }}
-                                ></span>
-                            </div>
-                        </div>
-
-                        <div className="status-item">
-                            <div className="status-item__header">
-                                <div className="status-item__label">
-                                    <span className="status-dot status-dot--interview"></span>
-                                    Entrevistas
-                                </div>
-
-                                <strong className="status-item__value">
-                                    5
-                                </strong>
-                            </div>
-
-                            <div className="status-item__bar">
-                                <span
-                                    className="status-item__progress status-item__progress--interview"
-                                    style={{ width: "12%" }}
-                                ></span>
-                            </div>
-                        </div>
-
-                        <div className="status-item">
-                            <div className="status-item__header">
-                                <div className="status-item__label">
-                                    <span className="status-dot status-dot--rejected"></span>
-                                    Rejeitadas
-                                </div>
-
-                                <strong className="status-item__value">
-                                    9
-                                </strong>
-                            </div>
-
-                            <div className="status-item__bar">
-                                <span
-                                    className="status-item__progress status-item__progress--rejected"
-                                    style={{ width: "21%" }}
-                                ></span>
-                            </div>
-                        </div>
-
+                        ))}
                     </div>
 
                 </aside>
 
-            </section>        </main>
+            </section>
+        </main>
     )
 }
 

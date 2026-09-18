@@ -1,4 +1,4 @@
-import type { ApplicationCreate, ApplicationResponse, ApplicationUpdate } from "../types/application"
+import type { ApplicationCreate, ApplicationResponse, ApplicationUpdate, DashboardResponse } from "../types/application"
 import { getStoredAccessToken } from "./auth"
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
@@ -82,5 +82,20 @@ export async function deleteApplication(id: number) {
             'Authorization': `Bearer ${getStoredAccessToken()}`
         }
     })
+    return response.json()
+}
+
+export async function getDashboard(): Promise<DashboardResponse> {
+    const response = await fetch(`${API_BASE_URL}/applications/dashboard`, {
+        headers: {
+            'Authorization': `Bearer ${getStoredAccessToken()}`
+        }
+    })
+
+    if (!response.ok) {
+        const payload = await response.json().catch(() => null)
+        throw new Error(getErrorMessage(payload, 'Não foi possível carregar o dashboard.'))
+    }
+
     return response.json()
 }
