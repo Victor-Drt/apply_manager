@@ -18,17 +18,11 @@ def create_application(
         **application.model_dump(), user_id=current_user.id
     )
     created = applications_repository.create_application(db, db_application)
-    return ApplicationResponse(
-        id=created.id,
-        user_id=created.user_id,
-        job_title=created.job_title,
-        created_at=created.created_at,
-        updated_at=created.updated_at,
-    )
+    return ApplicationResponse.model_validate(created)
 
 
-def get_applications(db: Session, user_id: int) -> list[Application]:
-    return applications_repository.get_applications(db, user_id)
+def get_applications(db: Session, user_id: int, offset: int, limit: int) -> list[Application]:
+    return applications_repository.get_applications(db, user_id, offset, limit)
 
 
 def get_application(db: Session, application_id: int, user_id: int) -> ApplicationResponse | None:

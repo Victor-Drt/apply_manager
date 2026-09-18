@@ -11,8 +11,8 @@ def create_application(db: Session, application: Application) -> Application:
     return application
 
 
-def get_applications(db: Session, user_id: int) -> list[Application]:
-    return db.query(Application).filter(Application.user_id == user_id).all()
+def get_applications(db: Session, user_id: int, offset: int, limit: int) -> list[Application]:
+    return db.query(Application).filter(Application.user_id == user_id).offset(offset).limit(limit).all()
 
 
 def get_application(db: Session, application_id: int, user_id: int) -> Application | None:

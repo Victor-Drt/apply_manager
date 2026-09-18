@@ -6,7 +6,8 @@ from sqlalchemy.orm import Session
 import app.services.applications as applications_service
 from app.api.deps import get_current_user, get_db
 from app.models.users import User
-from app.schemas.applications import ApplicationCreate, ApplicationUpdate
+from app.schemas.applications import ApplicationCreate, ApplicationUpdate, ApplicationResponse
+
 
 router = APIRouter()
 
@@ -24,8 +25,10 @@ def create_application(
 def get_applications(
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
-):
-    return applications_service.get_applications(db, current_user.id)
+    offset: int = 0,
+    limit: int = 10,
+) -> list[ApplicationResponse]:
+    return applications_service.get_applications(db, current_user.id, offset, limit)
 
 
 @router.get("/{application_id}")

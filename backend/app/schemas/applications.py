@@ -32,6 +32,10 @@ class ApplicationResponse(BaseModel):
     id: int
     user_id: int
     job_title: str
+    company_name: str | None = None
+    source: str
+    status: str
+    applied_at: datetime | None = None
     created_at: datetime
     updated_at: datetime | None = None
 
