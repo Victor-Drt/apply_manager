@@ -13,7 +13,7 @@ export interface ApplicationRowProps {
     createdAt: string;
 }
 
-const ApplicationRow = ({ id, jobTitle, companyName, source, applicationPlatform, jobUrl, status, appliedAt, notes, createdAt }: ApplicationRowProps) => {
+const ApplicationRow = ({ id, jobTitle, companyName, source, status, appliedAt }: ApplicationRowProps) => {
     const navigate = useNavigate();
 
     return (
@@ -21,12 +21,8 @@ const ApplicationRow = ({ id, jobTitle, companyName, source, applicationPlatform
             <td>{jobTitle}</td>
             <td>{companyName}</td>
             <td>{source}</td>
-            <td>{applicationPlatform}</td>
-            <td>{jobUrl}</td>
             <td>{status}</td>
             <td>{appliedAt}</td>
-            <td>{notes}</td>
-            <td>{createdAt}</td>
         </tr>
     )
 }

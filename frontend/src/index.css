@@ -1,14 +1,214 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+#root {
+  display: flex;
+  min-height: 100vh;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+/* =========================
+   SIDEBAR
+========================= */
+
+.navbar {
+  width: 280px;
+  min-height: 100vh;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex-shrink: 0;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-card-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "image name button"
+    "image email button";
+  align-items: center;
+
+  column-gap: 11px;
+  row-gap: 3px;
+
+  padding: 12px;
+  background-color: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.profile-card-row:hover {
+  background-color: #f3f4f6;
+  border-color: #dcdfe4;
+}
+
+.profile-image {
+  grid-area: image;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+  background-color: #ffffff;
+
+  object-fit: cover;
+  border: 1px solid #e5e7eb;
+}
+
+.profile-name {
+  grid-area: name;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #111827;
+
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-email {
+  grid-area: email;
+
+  font-size: 11px;
+  line-height: 1.2;
+  color: #6b7280;
+
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-button {
+  grid-area: button;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  border: none;
+  background-color: transparent;
+  color: #6b7280;
+
+  padding: 0;
+  border-radius: 7px;
+
+  font-size: 16px;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.profile-button i {
+  font-style: normal;
+}
+
+.profile-button:hover,
+.profile-button:focus-visible {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.profile-button:focus-visible {
+  outline: 2px solid #cbd5e1;
+  outline-offset: 2px;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.navbar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navbar-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+
+  padding: 0 12px;
+}
+
+.navbar-list-items {
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.navbar-list-items a {
+  display: flex;
+  align-items: center;
+
+  min-height: 40px;
+  padding: 0 12px;
+
+  color: #4b5563;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  border-radius: 8px;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.navbar-list-items a:hover,
+.navbar-list-items a:focus-visible {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.navbar-list-items a.active {
+  background-color: #eef2ff;
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.navbar-list-items a:focus-visible {
+  outline: 2px solid #c7d2fe;
+  outline-offset: -2px;
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+.content {
+  flex: 1;
+  min-width: 0;
 }
 
 .container {
-    max-width: 1200px;
+  width: 100%;
+  padding: 24px 16px;
+}
+
+#root > *:not(.navbar) {
+  flex: 1;
+  min-width: 0;
+  padding: 24px 16px;
 }

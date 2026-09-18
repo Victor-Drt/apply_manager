@@ -27,7 +27,10 @@ const ApplicationsTable = ({ applications }: ApplicationsTableProps) => {
                 </thead>
                 <tbody>
                     {applications.map((application) => (
-                        <ApplicationRow {...application} />
+                        <ApplicationRow
+                            key={application.id}
+                            {...application}
+                        />
                     ))}
                 </tbody>
             </table>

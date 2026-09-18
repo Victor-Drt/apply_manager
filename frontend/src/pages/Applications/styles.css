@@ -1,167 +1,267 @@
 .content {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;}
+
+/* ========================================
+   Applications Card
+======================================== */
 
 .applications-card {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  gap: 16px;
   width: 100%;
-  max-width: 1200px;
-  height: calc(100vh - 48px);
-  margin: 0 auto;
-  padding: 24px 16px;
-  background-color: #fff;
-  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
   overflow: hidden;
 }
 
-.applications-card h1 {
-  flex-shrink: 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #333;
-}
+
+/* ========================================
+   Header
+======================================== */
 
 .applications-card-header {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  height: auto;
-  flex-shrink: 0;
+
+  padding: 22px 24px;
+
+  border-bottom: 1px solid #e5e7eb;
 }
+
+.applications-card-header h1 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 650;
+  line-height: 1.3;
+
+  color: #111827;
+}
+
+
+/* ========================================
+   Create Button
+======================================== */
 
 .applications-create-button {
-  border: none;
-  padding: 10px 12px;
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  color: #333;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;
+  padding: 0 14px;
+
+  border: 1px solid #111827;
+  border-radius: 7px;
+
+  background: #111827;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
   cursor: pointer;
-  white-space: nowrap;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
 }
 
-.applications-create-button:hover,
-.applications-create-button:focus-visible {
-  background-color: #f0f0f0;
+.applications-create-button:hover {
+  background: #1f2937;
+  border-color: #1f2937;
 }
+
+.applications-create-button:active {
+  transform: translateY(1px);
+}
+
+
+/* ========================================
+   Table
+======================================== */
 
 .applications-card table {
-  display: block;
   width: 100%;
-  min-height: 0;
-  flex: 1;
-  overflow: auto;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
-.applications-card thead,
-.applications-card tbody {
-  display: table;
-  width: 100%;
-}
 
-.applications-card th,
-.applications-card td {
-  text-align: left;
-  padding: 10px 12px;
-  font-size: 14px;
-  color: #333;
-  white-space: nowrap;
+/* ========================================
+   Table Header
+======================================== */
+
+.applications-card thead {
+  background: #f9fafb;
 }
 
 .applications-card th {
-  font-size: 12px;
-  font-weight: 700;
-  color: #666;
+  height: 44px;
+  padding: 0 20px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+
+  color: #6b7280;
+  text-align: left;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background-color: #f0f0f0;
+  letter-spacing: 0.03em;
+
+  white-space: nowrap;
 }
 
-.applications-card th:first-child {
-  border-radius: 8px 0 0 0;
-}
 
-.applications-card th:last-child {
-  border-radius: 0 8px 0 0;
-}
+/* ========================================
+   Table Body
+======================================== */
 
-.applications-card tbody tr:last-child td:first-child {
-  border-radius: 0 0 0 8px;
-}
+.applications-card td {
+  height: 64px;
+  padding: 0 20px;
 
-.applications-card tbody tr:last-child td:last-child {
-  border-radius: 0 0 8px 0;
+  border-bottom: 1px solid #f0f1f3;
+
+  font-size: 13px;
+  color: #374151;
+
+  vertical-align: middle;
 }
 
 .applications-card tbody tr {
-  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
 .applications-card tbody tr:hover {
-  background-color: #f0f0f0;
+  background: #f9fafb;
 }
 
-.applications-card td:last-child {
-  font-size: 12px;
-  font-weight: 700;
-  color: #666;
+.applications-card tbody tr:last-child td {
+  border-bottom: none;
 }
+
+
+/* ========================================
+   Column Sizing
+======================================== */
+
+.applications-card th:nth-child(1),
+.applications-card td:nth-child(1) {
+  width: 28%;
+}
+
+.applications-card th:nth-child(2),
+.applications-card td:nth-child(2) {
+  width: 20%;
+}
+
+.applications-card th:nth-child(3),
+.applications-card td:nth-child(3) {
+  width: 17%;
+}
+
+.applications-card th:nth-child(4),
+.applications-card td:nth-child(4) {
+  width: 17%;
+}
+
+.applications-card th:nth-child(5),
+.applications-card td:nth-child(5) {
+  width: 18%;
+}
+
+
+/* ========================================
+   Pagination
+======================================== */
 
 .applications-pagination {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  height: auto;
-  flex-shrink: 0;
-  padding: 4px 0 0;
+  justify-content: space-between;
+
+  min-height: 64px;
+  padding: 0 20px;
+
+  border-top: 1px solid #e5e7eb;
 }
 
 .applications-pagination-info {
   font-size: 12px;
-  color: #666;
+  color: #6b7280;
 }
 
 .applications-pagination-actions {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 4px;
-  height: auto;
+  gap: 6px;
 }
 
 .applications-pagination-button {
-  border: none;
-  background: transparent;
-  color: #333;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 32px;
   height: 32px;
-  border-radius: 4px;
+
+  padding: 0;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+
+  background: #ffffff;
+  color: #374151;
+
   font-size: 18px;
   line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
-.applications-pagination-button:hover,
-.applications-pagination-button:focus-visible {
-  background-color: #f0f0f0;
+.applications-pagination-button:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #d1d5db;
 }
 
 .applications-pagination-button:disabled {
-  color: #666;
-  opacity: 0.4;
-  cursor: default;
-  background: transparent;
+  color: #d1d5db;
+  background: #f9fafb;
+  cursor: not-allowed;
+}
+
+
+/* ========================================
+   Responsive
+======================================== */
+
+@media (max-width: 800px) {
+  .applications-card {
+    overflow-x: auto;
+  }
+
+  .applications-card-header {
+    min-width: 700px;
+  }
+
+  .applications-card table {
+    min-width: 700px;
+  }
+
+  .applications-pagination {
+    min-width: 700px;
+  }
 }
