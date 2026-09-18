@@ -33,8 +33,11 @@ const ApplicationDetailField = ({
     options,
     onChange,
 }: ApplicationDetailFieldProps) => {
-    const fieldId = label.toLowerCase().replace(/\s+/g, '-')
-    const fieldName = name ?? fieldId.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase())
+    const fieldName = name ?? label
+        .toLowerCase()
+        .replace(/\s+([a-z])/g, (_, letter: string) => letter.toUpperCase())
+        .replace(/\s+/g, '')
+    const fieldId = fieldName.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)
     const errorId = `${fieldId}-error`
     const fieldClassName = error ? 'is-invalid' : undefined
 

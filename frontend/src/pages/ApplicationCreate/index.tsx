@@ -158,14 +158,14 @@ const ApplicationCreatePage = () => {
             <form className="application-create-card" onSubmit={handleSubmit} noValidate>
                 <h1>Create Application</h1>
                 <div className="application-create-fields">
-                    <ApplicationDetailField label="Job Title" value={application.jobTitle} onChange={handleChange} required error={fieldErrors.jobTitle} maxLength={255} />
-                    <ApplicationDetailField label="Company Name" value={application.companyName} onChange={handleChange} error={fieldErrors.companyName} maxLength={100} />
-                    <ApplicationDetailField label="Source" value={application.source} onChange={handleChange} required error={fieldErrors.source} maxLength={100} />
-                    <ApplicationDetailField label="Application Platform" value={application.applicationPlatform} onChange={handleChange} required error={fieldErrors.applicationPlatform} maxLength={100} />
-                    <ApplicationDetailField label="Job URL" value={application.jobUrl} wide onChange={handleChange} required error={fieldErrors.jobUrl} inputType="url" maxLength={2048} />
-                    <ApplicationDetailField label="Status" value={application.status} onChange={handleChange} required error={fieldErrors.status} options={APPLICATION_STATUSES} />
-                    <ApplicationDetailField label="Applied At" value={application.appliedAt} onChange={handleChange} error={fieldErrors.appliedAt} inputType="date" />
-                    <ApplicationDetailField label="Notes" value={application.notes} wide onChange={handleChange} />
+                    <ApplicationDetailField name="jobTitle" label="Titulo da Vaga" value={application.jobTitle} onChange={handleChange} required error={fieldErrors.jobTitle} maxLength={255} />
+                    <ApplicationDetailField name="companyName" label="Empresa" value={application.companyName} onChange={handleChange} error={fieldErrors.companyName} maxLength={100} />
+                    <ApplicationDetailField name="source" label="Origem" value={application.source} onChange={handleChange} required error={fieldErrors.source} maxLength={100} />
+                    <ApplicationDetailField name="applicationPlatform" label="Plataforma" value={application.applicationPlatform} onChange={handleChange} required error={fieldErrors.applicationPlatform} maxLength={100} />
+                    <ApplicationDetailField name="jobUrl" label="Link da Vaga" value={application.jobUrl} wide onChange={handleChange} required error={fieldErrors.jobUrl} inputType="url" maxLength={2048} />
+                    <ApplicationDetailField name="status" label="Status" value={application.status} onChange={handleChange} required error={fieldErrors.status} options={APPLICATION_STATUSES} />
+                    <ApplicationDetailField name="appliedAt" label="Data de Aplicação" value={application.appliedAt} onChange={handleChange} error={fieldErrors.appliedAt} inputType="date" />
+                    <ApplicationDetailField name="notes" label="Notas" value={application.notes} wide onChange={handleChange} />
                 </div>
                 <div className="application-create-actions">
                     <button type="button" className="application-create-action-button" onClick={handleCancel}>Cancel</button>

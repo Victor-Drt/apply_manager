@@ -59,11 +59,11 @@ const ApplicationsTable = ({ applications, setApplications }: ApplicationsTableP
             <table>
                 <thead>
                     <tr>
-                        <th>Job Title</th>
-                        <th>Company Name</th>
-                        <th>Source</th>
+                        <th>Titulo da Vaga</th>
+                        <th>Empresa</th>
+                        <th>Plataforma</th>
                         <th>Status</th>
-                        <th>Applied At</th>
+                        <th>Data de Aplicação</th>
                     </tr>
                 </thead>
 

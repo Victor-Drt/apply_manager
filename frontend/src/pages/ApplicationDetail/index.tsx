@@ -269,28 +269,28 @@ const ApplicationDetailPage = () => {
             )}
 
             <form className="application-detail-card" onSubmit={handleSave} noValidate>
-                <h1>Application Detail</h1>
+                <h1>Detalhes da candidatura</h1>
                 <div className="application-detail-fields">
-                    <ApplicationDetailField label="Job Title" value={application.jobTitle} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.jobTitle} maxLength={255} />
-                    <ApplicationDetailField label="Company Name" value={application.companyName} onChange={handleChange} disabled={fieldsDisabled} error={fieldErrors.companyName} maxLength={100} />
-                    <ApplicationDetailField label="Source" value={application.source} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.source} maxLength={100} />
-                    <ApplicationDetailField label="Application Platform" value={application.applicationPlatform} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.applicationPlatform} maxLength={100} />
-                    <ApplicationDetailField label="Job URL" value={application.jobUrl} wide onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.jobUrl} inputType="url" maxLength={2048} />
-                    <ApplicationDetailField label="Status" value={application.status} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.status} options={APPLICATION_STATUSES} />
-                    <ApplicationDetailField label="Applied At" value={application.appliedAt} onChange={handleChange} disabled={fieldsDisabled} error={fieldErrors.appliedAt} inputType="date" />
-                    <ApplicationDetailField label="Notes" value={application.notes} wide onChange={handleChange} disabled={fieldsDisabled} />
-                    <ApplicationDetailField label="Created At" value={application.createdAt} disabled />
+                    <ApplicationDetailField name="jobTitle" label="Titulo da Vaga" value={application.jobTitle} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.jobTitle} maxLength={255} />
+                    <ApplicationDetailField name="companyName" label="Empresa" value={application.companyName} onChange={handleChange} disabled={fieldsDisabled} error={fieldErrors.companyName} maxLength={100} />
+                    <ApplicationDetailField name="source" label="Origem" value={application.source} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.source} maxLength={100} />
+                    <ApplicationDetailField name="applicationPlatform" label="Plataforma" value={application.applicationPlatform} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.applicationPlatform} maxLength={100} />
+                    <ApplicationDetailField name="jobUrl" label="Link da Vaga" value={application.jobUrl} wide onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.jobUrl} inputType="url" maxLength={2048} />
+                    <ApplicationDetailField name="status" label="Status" value={application.status} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.status} options={APPLICATION_STATUSES} />
+                    <ApplicationDetailField name="appliedAt" label="Data de Aplicação" value={application.appliedAt} onChange={handleChange} disabled={fieldsDisabled} error={fieldErrors.appliedAt} inputType="date" />
+                    <ApplicationDetailField name="notes" label="Notas" value={application.notes} wide onChange={handleChange} disabled={fieldsDisabled} />
+                    <ApplicationDetailField name="createdAt" label="Data de Criação" value={application.createdAt} disabled />
                 </div>
                 <div className="application-detail-actions">
                     {isEditing ? (
                         <>
-                            <button type="button" className="application-detail-action-button" onClick={handleCancel} disabled={isSaving}>Cancel</button>
-                            <button type="submit" className="application-detail-action-button" disabled={isSaving}>Save</button>
+                            <button type="button" className="application-detail-action-button" onClick={handleCancel} disabled={isSaving}>Cancelar</button>
+                            <button type="submit" className="application-detail-action-button" disabled={isSaving}>Salvar</button>
                         </>
                     ) : (
                         <>
-                            <button type="button" className="application-detail-action-button" onClick={handleEdit} disabled={isLoading || Boolean(error)}>Edit</button>
-                            <button type="button" className="application-detail-action-button" onClick={handleDelete} disabled={isLoading || Boolean(error)}>Delete</button>
+                            <button type="button" className="application-detail-action-button" onClick={handleEdit} disabled={isLoading || Boolean(error)}>Editar</button>
+                            <button type="button" className="application-detail-action-button" onClick={handleDelete} disabled={isLoading || Boolean(error)}>Excluir</button>
                         </>
                     )}
                 </div>
