@@ -42,6 +42,17 @@
   box-shadow: inset 0 0 0 1px #f0f0f0;
 }
 
+.application-detail-field input.is-invalid,
+.application-detail-field input.is-invalid:not(:disabled) {
+  box-shadow: inset 0 0 0 1px #dc2626;
+}
+
+.application-detail-field-error {
+  font-size: 12px;
+  font-weight: 500;
+  color: #dc2626;
+}
+
 .application-detail-field input::placeholder {
   color: #666;
 }
