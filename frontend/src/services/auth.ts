@@ -19,6 +19,11 @@ export function getStoredAccessToken(): string | null {
   return localStorage.getItem(ACCESS_TOKEN_KEY)
 }
 
+export function logout(): void {
+  localStorage.removeItem(ACCESS_TOKEN_KEY)
+  localStorage.removeItem(TOKEN_TYPE_KEY)
+}
+
 export function consumeOAuthCallback(): OAuthCallbackResult {
   const url = new URL(window.location.href)
   const accessToken = url.searchParams.get('access_token')
