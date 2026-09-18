@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import update
 from ..models.applications import Application
 from ..models.users import User
+from ..models.applications import ApplicationStatus
 
 
 def create_application(db: Session, application: Application) -> Application:
@@ -11,12 +12,26 @@ def create_application(db: Session, application: Application) -> Application:
     return application
 
 
-def get_applications(db: Session, user_id: int, offset: int, limit: int) -> list[Application]:
-    return db.query(Application).filter(Application.user_id == user_id).offset(offset).limit(limit).all()
+def get_applications(
+    db: Session, user_id: int, offset: int, limit: int
+) -> list[Application]:
+    return (
+        db.query(Application)
+        .filter(Application.user_id == user_id)
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
 
 
-def get_application(db: Session, application_id: int, user_id: int) -> Application | None:
-    return db.query(Application).filter(Application.id == application_id, Application.user_id == user_id).first()
+def get_application(
+    db: Session, application_id: int, user_id: int
+) -> Application | None:
+    return (
+        db.query(Application)
+        .filter(Application.id == application_id, Application.user_id == user_id)
+        .first()
+    )
 
 
 def update_application(
@@ -49,3 +64,50 @@ def delete_application(db: Session, application_id: int, user_id: int) -> None:
     db.delete(db_application)
     db.commit()
     return db_application
+
+
+def get_latest_applications(db: Session, user_id: int, limit: int) -> list[Application]:
+    return (
+        db.query(Application)
+        .filter(Application.user_id == user_id)
+        .order_by(Application.created_at.desc())
+        .limit(limit)
+        .all()
+    )
+
+
+def get_total_applications(db: Session, user_id: int) -> int:
+    return db.query(Application).filter(Application.user_id == user_id).count()
+
+
+def get_applied_applications(db: Session, user_id: int) -> int:
+    return (
+        db.query(Application)
+        .filter(
+            Application.user_id == user_id,
+            Application.status == ApplicationStatus.APPLIED,
+        )
+        .count()
+    )
+
+
+def get_interviews_applications(db: Session, user_id: int) -> int:
+    return (
+        db.query(Application)
+        .filter(
+            Application.user_id == user_id,
+            Application.status == ApplicationStatus.INTERVIEW,
+        )
+        .count()
+    )
+
+
+def get_rejected_applications(db: Session, user_id: int) -> int:
+    return (
+        db.query(Application)
+        .filter(
+            Application.user_id == user_id,
+            Application.status == ApplicationStatus.REJECTED,
+        )
+        .count()
+    )

@@ -50,3 +50,12 @@ class ApplicationResponse(BaseModel):
     updated_at: datetime | None = None
 
     model_config = ConfigDict(from_attributes=True, use_enum_values=True)
+
+class DashboardResponse(BaseModel):
+    total_applications: int
+    applied_applications: int
+    interviews_applications: int
+    rejected_applications: int
+    last_applications: list[ApplicationResponse]
+
+    model_config = ConfigDict(from_attributes=True, use_enum_values=True)

@@ -6,7 +6,12 @@ from sqlalchemy.orm import Session
 import app.services.applications as applications_service
 from app.api.deps import get_current_user, get_db
 from app.models.users import User
-from app.schemas.applications import ApplicationCreate, ApplicationUpdate, ApplicationResponse
+from app.schemas.applications import (
+    ApplicationCreate,
+    ApplicationUpdate,
+    ApplicationResponse,
+    DashboardResponse,
+)
 
 
 router = APIRouter()
@@ -37,7 +42,9 @@ def get_application(
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> ApplicationResponse:
-    application = applications_service.get_application(db, application_id, current_user.id)
+    application = applications_service.get_application(
+        db, application_id, current_user.id
+    )
     if application is None:
         raise HTTPException(status_code=404, detail="Candidatura não encontrada.")
     return application
@@ -70,3 +77,11 @@ def delete_application(
     if result:
         return Response(status_code=204)
     return Response(status_code=404)
+
+
+@router.get("/dashboard")
+def get_dashboard(
+    db: Annotated[Session, Depends(get_db)],
+    current_user: Annotated[User, Depends(get_current_user)],
+) -> DashboardResponse:
+    return applications_service.get_dashboard(db, current_user.id)
