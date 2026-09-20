@@ -1,8 +1,11 @@
-import { getDashboard } from "../../services/applications";
 import "./styles.css"
-import { useNavigate, NavLink } from "react-router-dom";
+import { getDashboard } from "../../services/applications";
 import { useState, useEffect } from "react";
+import { useNavigate, NavLink, useOutletContext } from "react-router-dom";
 import { getApplicationStatusLabel, type DashboardResponse } from "../../types/application";
+import type { User } from "../../types/users";
+
+
 
 const STATUS_BADGES = ['saved', 'applied', 'interview', 'rejected'] as const
 type StatusBadge = (typeof STATUS_BADGES)[number]
@@ -42,6 +45,7 @@ const HomePage = () => {
     const navigate = useNavigate();
 
     const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
+    const { user } = useOutletContext<{ user: User | null }>()
 
     useEffect(() => {
         getDashboard().then((data) => setDashboard(data)).catch((error) => console.error(error));
@@ -63,7 +67,7 @@ const HomePage = () => {
             <header className="dashboard-header">
                 <div className="dashboard-header__content">
                     <h1 className="dashboard-header__title">
-                        Olá, Victor!
+                        Olá, {user?.name}
                     </h1>
 
                     <p className="dashboard-header__subtitle">

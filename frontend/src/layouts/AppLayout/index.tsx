@@ -22,7 +22,7 @@ function AppLayout() {
         image={user?.image ?? ""}
       />
 
-      <Outlet />
+      <Outlet context={{ user }} />
     </>
   )
 }
