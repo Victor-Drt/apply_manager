@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./styles.css";
 
 interface DeleteApplicationModalProps {
@@ -7,9 +6,6 @@ interface DeleteApplicationModalProps {
 }
 
 const DeleteApplicationModal = ({ onDelete, onCancel }: DeleteApplicationModalProps) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-
     return (
         <div className="modal" onClick={onCancel} role="presentation">
             <div
@@ -19,12 +15,11 @@ const DeleteApplicationModal = ({ onDelete, onCancel }: DeleteApplicationModalPr
                 aria-modal="true"
                 onClick={(event) => event.stopPropagation()}
             >
-                <h2 id="delete-application-title" className="modal-title">Delete Application</h2>
-                <p className="modal-description">Are you sure you want to delete this application?</p>
-                {error ? <div className="modal-error">{error}</div> : null}
+                <h2 id="delete-application-title" className="modal-title">Excluir candidatura</h2>
+                <p className="modal-description">Essa ação não pode ser desfeita. Deseja excluir esta candidatura?</p>
                 <div className="modal-actions">
-                    <button type="button" className="modal-action-button" onClick={onCancel}>Cancel</button>
-                    <button type="button" className="modal-action-button" disabled={isLoading} onClick={onDelete}>Delete</button>
+                    <button type="button" className="modal-action-button" onClick={onCancel}>Cancelar</button>
+                    <button type="button" className="modal-action-button modal-action-button--danger" onClick={onDelete}>Excluir</button>
                 </div>
             </div>
         </div>

@@ -140,6 +140,11 @@ const ApplicationDetailPage = () => {
     useEffect(() => {
         if (!hasValidId) {
             navigate('/applications', { replace: true })
+        }
+    }, [hasValidId, navigate])
+
+    useEffect(() => {
+        if (!hasValidId) {
             return
         }
 
@@ -171,12 +176,14 @@ const ApplicationDetailPage = () => {
         return () => {
             cancelled = true
         }
-    }, [applicationId, hasValidId, navigate]);
+    }, [applicationId, hasValidId]);
 
     const handleEdit = () => {
-        setIsEditing(true);
-        setError(null);
-        setFieldErrors({});
+        setError(null)
+        setFieldErrors({})
+        window.setTimeout(() => {
+            setIsEditing(true)
+        }, 0)
     }
 
     const handleCancel = () => {
@@ -186,9 +193,8 @@ const ApplicationDetailPage = () => {
         setIsEditing(false);
     }
 
-    const handleSave = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (!hasValidId) {
+    const persistApplication = async () => {
+        if (!hasValidId || !isEditing) {
             return
         }
 
@@ -226,6 +232,11 @@ const ApplicationDetailPage = () => {
         }
     }
 
+    const handleSave = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        void persistApplication()
+    }
+
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target
         setApplication((current) => ({
@@ -238,19 +249,23 @@ const ApplicationDetailPage = () => {
         }))
     }
 
-    const handleDelete = async () => {
+    const handleDelete = () => {
         setIsModalOpen(true);
-        try {
-            await deleteApplication(applicationId)
-            navigate('/applications')
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Não foi possível deletar a candidatura.')
-        }
     }
 
-    const confirmDelete = () => {
-        setIsModalOpen(false);
-        navigate('/applications');
+    const confirmDelete = async () => {
+        if (!hasValidId) {
+            return
+        }
+
+        try {
+            await deleteApplication(applicationId)
+            setIsModalOpen(false)
+            navigate('/applications')
+        } catch (err) {
+            setIsModalOpen(false)
+            setError(err instanceof Error ? err.message : 'Não foi possível excluir a candidatura.')
+        }
     }
 
     const closeModal = () => {
@@ -258,6 +273,10 @@ const ApplicationDetailPage = () => {
     }
 
     const fieldsDisabled = !isEditing || isLoading || isSaving
+    const subtitle = application.jobTitle
+        ? `${application.jobTitle}${application.companyName ? ` · ${application.companyName}` : ''}`
+        : 'Veja e atualize os dados desta vaga.'
+    const actionsDisabled = isLoading || (!application.jobTitle && Boolean(error))
 
     return (
         <main className="content application-detail">
@@ -268,9 +287,16 @@ const ApplicationDetailPage = () => {
                 />
             )}
 
-            <form className="application-detail-card" onSubmit={handleSave} noValidate>
-                <h1>Detalhes da candidatura</h1>
-                <div className="application-detail-fields">
+            <div className={isEditing ? 'application-detail-card is-editing' : 'application-detail-card'}>
+                <header className="application-detail-header">
+                    <div className="application-detail-header-copy">
+                        <h1>Detalhes da candidatura</h1>
+                        <p>{subtitle}</p>
+                    </div>
+                    {isEditing ? <span className="application-detail-mode">Editando</span> : null}
+                </header>
+
+                <form id="application-detail-form" className="application-detail-fields" onSubmit={handleSave} noValidate>
                     <ApplicationDetailField name="jobTitle" label="Titulo da Vaga" value={application.jobTitle} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.jobTitle} maxLength={255} />
                     <ApplicationDetailField name="companyName" label="Empresa" value={application.companyName} onChange={handleChange} disabled={fieldsDisabled} error={fieldErrors.companyName} maxLength={100} />
                     <ApplicationDetailField name="source" label="Origem" value={application.source} onChange={handleChange} disabled={fieldsDisabled} required error={fieldErrors.source} maxLength={100} />
@@ -280,23 +306,50 @@ const ApplicationDetailPage = () => {
                     <ApplicationDetailField name="appliedAt" label="Data de Aplicação" value={application.appliedAt} onChange={handleChange} disabled={fieldsDisabled} error={fieldErrors.appliedAt} inputType="date" />
                     <ApplicationDetailField name="notes" label="Notas" value={application.notes} wide onChange={handleChange} disabled={fieldsDisabled} />
                     <ApplicationDetailField name="createdAt" label="Data de Criação" value={application.createdAt} disabled />
-                </div>
+                </form>
+
+                {isLoading ? <div className="application-detail-status">Carregando candidatura...</div> : null}
+                {error ? <div className="application-detail-error">{error}</div> : null}
+
                 <div className="application-detail-actions">
-                    {isEditing ? (
-                        <>
-                            <button type="button" className="application-detail-action-button" onClick={handleCancel} disabled={isSaving}>Cancelar</button>
-                            <button type="submit" className="application-detail-action-button" disabled={isSaving}>Salvar</button>
-                        </>
-                    ) : (
-                        <>
-                            <button type="button" className="application-detail-action-button" onClick={handleEdit} disabled={isLoading || Boolean(error)}>Editar</button>
-                            <button type="button" className="application-detail-action-button" onClick={handleDelete} disabled={isLoading || Boolean(error)}>Excluir</button>
-                        </>
-                    )}
+                    <button
+                        type="button"
+                        className="application-detail-action-button"
+                        onClick={handleCancel}
+                        disabled={isSaving}
+                        hidden={!isEditing}
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        type="button"
+                        className="application-detail-action-button application-detail-action-button--primary"
+                        onClick={() => { void persistApplication() }}
+                        disabled={isSaving}
+                        hidden={!isEditing}
+                    >
+                        {isSaving ? 'Salvando...' : 'Salvar'}
+                    </button>
+                    <button
+                        type="button"
+                        className="application-detail-action-button application-detail-action-button--danger"
+                        onClick={handleDelete}
+                        disabled={actionsDisabled}
+                        hidden={isEditing}
+                    >
+                        Excluir
+                    </button>
+                    <button
+                        type="button"
+                        className="application-detail-action-button application-detail-action-button--primary"
+                        onClick={handleEdit}
+                        disabled={actionsDisabled}
+                        hidden={isEditing}
+                    >
+                        Editar
+                    </button>
                 </div>
-            </form>
-            {isLoading && <div className="application-detail-status">Carregando candidatura...</div>}
-            {error && <div className="application-detail-error">{error}</div>}
+            </div>
         </main>
     );
 }
