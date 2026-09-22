@@ -156,7 +156,13 @@ const ApplicationCreatePage = () => {
     return (
         <main className="content application-create">
             <form className="application-create-card" onSubmit={handleSubmit} noValidate>
-                <h1>Create Application</h1>
+                <header className="application-create-header">
+                    <div className="application-create-header-copy">
+                        <h1>Nova candidatura</h1>
+                        <p>Cadastre a vaga com empresa, origem, link e status para acompanhar o processo.</p>
+                    </div>
+                </header>
+
                 <div className="application-create-fields">
                     <ApplicationDetailField name="jobTitle" label="Titulo da Vaga" value={application.jobTitle} onChange={handleChange} required error={fieldErrors.jobTitle} maxLength={255} />
                     <ApplicationDetailField name="companyName" label="Empresa" value={application.companyName} onChange={handleChange} error={fieldErrors.companyName} maxLength={100} />
@@ -167,12 +173,16 @@ const ApplicationCreatePage = () => {
                     <ApplicationDetailField name="appliedAt" label="Data de Aplicação" value={application.appliedAt} onChange={handleChange} error={fieldErrors.appliedAt} inputType="date" />
                     <ApplicationDetailField name="notes" label="Notas" value={application.notes} wide onChange={handleChange} />
                 </div>
+
+                {error ? <div className="application-create-error">{error}</div> : null}
+
                 <div className="application-create-actions">
-                    <button type="button" className="application-create-action-button" onClick={handleCancel}>Cancel</button>
-                    <button type="submit" className="application-create-action-button" disabled={isLoading}>Create</button>
+                    <button type="button" className="application-create-action-button" onClick={handleCancel}>Cancelar</button>
+                    <button type="submit" className="application-create-action-button application-create-action-button--primary" disabled={isLoading}>
+                        {isLoading ? 'Salvando...' : 'Criar candidatura'}
+                    </button>
                 </div>
             </form>
-            {error && <div className="application-create-error">{error}</div>}
         </main>
     );
 }
