@@ -1,18 +1,7 @@
 import type { ApplicationCreate, ApplicationResponse, ApplicationUpdate, DashboardResponse } from "../types/application"
-import { getStoredAccessToken } from "./auth"
-import { apiFetch } from "./api"
+import { apiFetch, getErrorMessage } from "./api"
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
 
-function getErrorMessage(payload: unknown, fallback: string) {
-    if (payload && typeof payload === 'object' && 'detail' in payload) {
-        const detail = (payload as { detail: unknown }).detail
-        if (typeof detail === 'string') {
-            return detail
-        }
-    }
-    return fallback
-}
 
 export async function getApplications(
     offset: number = 0,

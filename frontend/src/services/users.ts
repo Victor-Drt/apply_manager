@@ -1,13 +1,17 @@
-import { getStoredAccessToken } from "./auth"
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
-
+import { apiFetch, getErrorMessage } from "./api"
 
 export async function getUser() {
-    const response = await fetch(`${API_BASE_URL}/users/me`, {
-        headers: {
-            'Authorization': `Bearer ${getStoredAccessToken()}`
-        }
-    })
+    const response = await apiFetch('/users/me')
+
+    if (!response.ok) {
+        const payload = await response.json().catch(() => null)
+        throw new Error(
+            getErrorMessage(
+                payload,
+                'Não foi possível carregar os dados do usuário.'
+            )
+        )
+    }
+
     return response.json()
 }
