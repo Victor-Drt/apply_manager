@@ -1,32 +1,38 @@
 import os
 from dotenv import load_dotenv
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 load_dotenv()
 
-SECRET_KEY = os.getenv("SECRET_KEY") or "chave-super-secreta"
-ALGORITHM = os.getenv("ALGORITHM") or "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES") or "30")
-DATABASE_URL = os.getenv("DATABASE_URL") or "sqlite:///./db.sqlite3"
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID") or ""
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET") or ""
-GOOGLE_REDIRECT_URI = os.getenv(
-    "GOOGLE_REDIRECT_URI",
-    "http://localhost:8000/api/v1/auth/google/callback",
-)
+class Settings(BaseSettings):
 
-LINKEDIN_CLIENT_ID = os.getenv("LINKEDIN_CLIENT_ID", "")
-LINKEDIN_CLIENT_SECRET = os.getenv("LINKEDIN_CLIENT_SECRET", "")
-LINKEDIN_REDIRECT_URI = os.getenv(
-    "LINKEDIN_REDIRECT_URI",
-    "http://localhost:8000/api/v1/auth/linkedin/callback",
-)
+    # database
+    DATABASE_URL: str = "sqlite:///./db.sqlite3"
 
-FRONTEND_REDIRECT_URI = os.getenv("FRONTEND_REDIRECT_URI", "")
-FRONTEND_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "FRONTEND_ORIGINS", "http://localhost:5173,http://localhost:3000"
-    ).split(",")
-    if origin.strip()
-]
+    # authentication
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
+
+    # Oauth - Google
+    GOOGLE_CLIENT_ID: str
+    GOOGLE_CLIENT_SECRET: str
+    GOOGLE_REDIRECT_URI: str = "http://localhost:8000/api/v1/auth/google/callback"
+
+    # Oauth - Linkedin
+    LINKEDIN_CLIENT_ID: str
+    LINKEDIN_CLIENT_SECRET: str
+    LINKEDIN_REDIRECT_URI: str = "http://localhost:8000/api/v1/auth/linkedin/callback"
+
+    # cors
+    FRONTEND_REDIRECT_URI: str
+    FRONTEND_ORIGINS: list[str] = [
+        "http://localhost:5173",
+        "http://localhost:3000",
+    ]
+
+    model_config = SettingsConfigDict(env_file=".env")
+
+
+settings = Settings()

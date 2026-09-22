@@ -7,7 +7,7 @@ from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
-from app.core.config import FRONTEND_REDIRECT_URI
+from app.core.config import settings
 from app.core.oauth import build_authorize_url
 from app.schemas.auth import OAuthCode, Token
 from app.services import auth as auth_service
@@ -28,11 +28,11 @@ def _validate_state(request: Request, state: str | None) -> None:
 
 
 def _token_response(token: Token):
-    if FRONTEND_REDIRECT_URI:
+    if settings.FRONTEND_REDIRECT_URI:
         query = urlencode(
             {"access_token": token.access_token, "token_type": token.token_type}
         )
-        return RedirectResponse(f"{FRONTEND_REDIRECT_URI}?{query}")
+        return RedirectResponse(f"{settings.FRONTEND_REDIRECT_URI}?{query}")
     return token
 
 

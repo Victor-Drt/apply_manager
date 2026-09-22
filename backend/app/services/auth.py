@@ -3,7 +3,7 @@ from datetime import timedelta
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.config import ACCESS_TOKEN_EXPIRE_MINUTES
+from app.core.config import settings
 from app.core.oauth import exchange_code_for_tokens, fetch_userinfo, normalize_userinfo
 from app.core.security import create_access_token
 from app.repositories import users as users_repository
@@ -37,7 +37,7 @@ def login_with_oauth_code(db: Session, provider: str, code: str) -> Token:
 
     access_token = create_access_token(
         data={"sub": str(user.id)},
-        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
+        expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES),
     )
     return Token(access_token=access_token, token_type="bearer")
 

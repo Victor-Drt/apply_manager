@@ -2,15 +2,7 @@ from urllib.parse import urlencode
 
 import httpx
 from fastapi import HTTPException, status
-
-from .config import (
-    GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET,
-    GOOGLE_REDIRECT_URI,
-    LINKEDIN_CLIENT_ID,
-    LINKEDIN_CLIENT_SECRET,
-    LINKEDIN_REDIRECT_URI,
-)
+from app.core.config import settings
 
 PROVIDERS = {
     "google": {
@@ -18,18 +10,18 @@ PROVIDERS = {
         "token_url": "https://oauth2.googleapis.com/token",
         "userinfo_url": "https://openidconnect.googleapis.com/v1/userinfo",
         "scope": "openid email profile",
-        "client_id": lambda: GOOGLE_CLIENT_ID,
-        "client_secret": lambda: GOOGLE_CLIENT_SECRET,
-        "redirect_uri": lambda: GOOGLE_REDIRECT_URI,
+        "client_id": lambda: settings.GOOGLE_CLIENT_ID,
+        "client_secret": lambda: settings.GOOGLE_CLIENT_SECRET,
+        "redirect_uri": lambda: settings.GOOGLE_REDIRECT_URI,
     },
     "linkedin": {
         "authorize_url": "https://www.linkedin.com/oauth/v2/authorization",
         "token_url": "https://www.linkedin.com/oauth/v2/accessToken",
         "userinfo_url": "https://api.linkedin.com/v2/userinfo",
         "scope": "openid profile email",
-        "client_id": lambda: LINKEDIN_CLIENT_ID,
-        "client_secret": lambda: LINKEDIN_CLIENT_SECRET,
-        "redirect_uri": lambda: LINKEDIN_REDIRECT_URI,
+        "client_id": lambda: settings.LINKEDIN_CLIENT_ID,
+        "client_secret": lambda: settings.LINKEDIN_CLIENT_SECRET,
+        "redirect_uri": lambda: settings.LINKEDIN_REDIRECT_URI,
     },
 }
 
