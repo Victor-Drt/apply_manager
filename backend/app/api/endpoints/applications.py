@@ -17,7 +17,7 @@ from app.schemas.applications import (
 router = APIRouter()
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 def create_application(
     application: ApplicationCreate,
     db: Annotated[Session, Depends(get_db)],
@@ -26,7 +26,7 @@ def create_application(
     return applications_service.create_application(db, current_user, application)
 
 
-@router.get("/")
+@router.get("/", status_code=200)
 def get_applications(
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
@@ -36,7 +36,7 @@ def get_applications(
     return applications_service.get_applications(db, current_user.id, offset, limit)
 
 
-@router.get("/dashboard")
+@router.get("/dashboard", status_code=200)
 def get_dashboard(
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
@@ -44,7 +44,7 @@ def get_dashboard(
     return applications_service.get_dashboard(db, current_user.id)
 
 
-@router.get("/{application_id}")
+@router.get("/{application_id}", status_code=200)
 def get_application(
     application_id: int,
     db: Annotated[Session, Depends(get_db)],
@@ -58,7 +58,7 @@ def get_application(
     return application
 
 
-@router.put("/{application_id}")
+@router.put("/{application_id}", status_code=204)
 def update_application(
     application_id: int,
     application: ApplicationUpdate,
@@ -73,7 +73,7 @@ def update_application(
     return Response(status_code=404)
 
 
-@router.delete("/{application_id}")
+@router.delete("/{application_id}", status_code=204)
 def delete_application(
     application_id: int,
     db: Annotated[Session, Depends(get_db)],
