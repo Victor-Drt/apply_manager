@@ -9,6 +9,9 @@ class Settings(BaseSettings):
 
     # database
     DATABASE_URL: str = "sqlite:///./db.sqlite3"
+    POSTGRES_DB: str
+    POSTGRES_USER: str
+    POSTGRES_PASSWORD: str
 
     # authentication
     SECRET_KEY: str
