@@ -1,17 +1,11 @@
-import { apiFetch, getErrorMessage } from "./api"
+import { axiosClient } from "./client"
 
 export async function getUser() {
-    const response = await apiFetch('/users/me')
+    const response = await axiosClient.get('/users/me')
 
-    if (!response.ok) {
-        const payload = await response.json().catch(() => null)
-        throw new Error(
-            getErrorMessage(
-                payload,
-                'Não foi possível carregar os dados do usuário.'
-            )
-        )
+    if (response.status !== 200) {
+        throw new Error('Não foi possível carregar os dados do usuário.')
     }
 
-    return response.json()
+    return response.data
 }
