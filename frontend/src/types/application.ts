@@ -28,6 +28,7 @@ interface ApplicationResponse {
     application_platform: string
     job_url: string
     status: ApplicationStatus
+    salary_expectations: number
     applied_at: string | null
     notes: string | null
     created_at: string
@@ -43,6 +44,7 @@ interface ApplicationCreate {
     status: ApplicationStatus
     applied_at: string | null
     notes: string | null
+    salary_expectations: number
 }
 
 interface ApplicationUpdate {
@@ -54,6 +56,7 @@ interface ApplicationUpdate {
     status?: ApplicationStatus
     applied_at?: string | null
     notes?: string | null
+    salary_expectations?: number | null
 }
 
 interface DashboardResponse {

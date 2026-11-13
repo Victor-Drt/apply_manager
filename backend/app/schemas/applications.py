@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
+from decimal import Decimal
 
 from app.models.applications import ApplicationStatus
 
@@ -14,6 +15,7 @@ class Application(BaseModel):
     status: ApplicationStatus = ApplicationStatus.SAVED
     applied_at: datetime | None = None
     notes: str | None = None
+    salary_expectations: Decimal
 
     model_config = ConfigDict(use_enum_values=True)
 
@@ -31,6 +33,7 @@ class ApplicationUpdate(BaseModel):
     status: ApplicationStatus | None = None
     applied_at: datetime | None = None
     notes: str | None = None
+    salary_expectations: Decimal | None = None
 
     model_config = ConfigDict(use_enum_values=True)
 
@@ -46,6 +49,7 @@ class ApplicationResponse(BaseModel):
     status: ApplicationStatus
     applied_at: datetime | None = None
     notes: str | None = None
+    salary_expectations: Decimal
     created_at: datetime
     updated_at: datetime | None = None
 

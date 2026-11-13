@@ -67,6 +67,7 @@ const ApplicationDetailField = ({
                     id={fieldId}
                     name={fieldName}
                     type={inputType}
+                    min={0}
                     placeholder={label}
                     disabled={disabled}
                     value={value}

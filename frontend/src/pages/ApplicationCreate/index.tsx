@@ -14,6 +14,7 @@ type ApplicationForm = {
     status: ApplicationStatus;
     appliedAt: string;
     notes: string;
+    salaryExpectations: number;
 }
 
 type ApplicationFormErrors = Partial<Record<keyof ApplicationForm, string>>
@@ -27,6 +28,23 @@ const emptyApplication: ApplicationForm = {
     status: 'saved',
     appliedAt: '',
     notes: '',
+    salaryExpectations: 0,
+}
+
+// Formata um número (ex: 5000.5) para exibição visual (ex: "R$ 5.000,50")
+function formatCurrency(value: number): string {
+    if (!value) return '';
+    return value.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
+}
+
+// Extrai os dígitos digitados e converte para número decimal (ex: "R$ 5.000,50" -> 5000.5)
+function parseCurrencyToNumber(rawValue: string): number {
+    const digits = rawValue.replace(/\D/g, '');
+    if (!digits) return 0;
+    return Number(digits) / 100;
 }
 
 function isValidUrl(value: string) {
@@ -128,6 +146,7 @@ const ApplicationCreatePage = () => {
                 status: isApplicationStatus(application.status) ? application.status : 'saved',
                 applied_at: application.appliedAt.trim() || null,
                 notes: application.notes.trim() || null,
+                salary_expectations: application.salaryExpectations,
             });
             navigate('/applications');
         } catch (err) {
@@ -139,10 +158,19 @@ const ApplicationCreatePage = () => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target
-        setApplication({
-            ...application,
-            [name]: value
-        });
+
+        if (name === 'salaryExpectations') {
+            setApplication({
+                ...application,
+                salaryExpectations: parseCurrencyToNumber(value),
+            });
+        } else {
+            setApplication({
+                ...application,
+                [name]: value,
+            });
+        }
+
         setFieldErrors((current) => ({
             ...current,
             [name]: undefined,
@@ -171,6 +199,16 @@ const ApplicationCreatePage = () => {
                     <ApplicationDetailField name="jobUrl" label="Link da Vaga" value={application.jobUrl} wide onChange={handleChange} required error={fieldErrors.jobUrl} inputType="url" maxLength={2048} />
                     <ApplicationDetailField name="status" label="Status" value={application.status} onChange={handleChange} required error={fieldErrors.status} options={APPLICATION_STATUSES} />
                     <ApplicationDetailField name="appliedAt" label="Data de Aplicação" value={application.appliedAt} onChange={handleChange} error={fieldErrors.appliedAt} inputType="date" />
+                    <ApplicationDetailField
+                        name="salaryExpectations"
+                        label="Pretensão Salarial"
+                        value={formatCurrency(application.salaryExpectations)}
+                        required
+                        error={fieldErrors.salaryExpectations}
+                        wide
+                        onChange={handleChange}
+                        inputType="text"
+                    />
                     <ApplicationDetailField name="notes" label="Notas" value={application.notes} wide onChange={handleChange} />
                 </div>
 

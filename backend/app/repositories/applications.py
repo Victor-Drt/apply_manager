@@ -70,7 +70,7 @@ def get_latest_applications(db: Session, user_id: int, limit: int) -> list[Appli
     return (
         db.query(Application)
         .filter(Application.user_id == user_id)
-        .order_by(Application.created_at.desc())
+        .order_by(Application.applied_at.desc())
         .limit(limit)
         .all()
     )

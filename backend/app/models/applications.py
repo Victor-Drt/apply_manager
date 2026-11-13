@@ -1,7 +1,8 @@
 from datetime import datetime
 from enum import Enum
+from decimal import Decimal
 
-from sqlalchemy import DateTime, Enum as SQLEnum, ForeignKey, Integer, String, Text
+from sqlalchemy import DateTime, Enum as SQLEnum, ForeignKey, Integer, String, Text, Numeric
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..db.base import Base
@@ -56,6 +57,8 @@ class Application(Base):
         String(2048),
         nullable=False,
     )
+
+    salary_expectations: Mapped[Decimal] = mapped_column(Numeric(10, 2), nullable=False)
 
     status: Mapped[ApplicationStatus] = mapped_column(
         SQLEnum(

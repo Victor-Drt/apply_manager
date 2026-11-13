@@ -1,18 +1,15 @@
-import { Outlet } from "react-router-dom"
-import Navbar from "../../components/Navbar"
-import { useState, useEffect } from "react"
-import type { User } from "../../types/users"
-import { getUser } from "../../services/users"
+import { Outlet } from "react-router-dom";
+import Navbar from "../../components/Navbar";
+import { useState, useEffect } from "react";
+import type { User } from "../../types/users";
+import { getUser } from "../../services/users";
 
 function AppLayout() {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    getUser()
-      .then(setUser)
-      .catch(console.error)
-  }, [])
-
+    getUser().then(setUser).catch(console.error);
+  }, []);
 
   return (
     <>
@@ -24,7 +21,7 @@ function AppLayout() {
 
       <Outlet context={{ user }} />
     </>
-  )
+  );
 }
 
-export default AppLayout
+export default AppLayout;
