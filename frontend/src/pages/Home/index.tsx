@@ -2,8 +2,8 @@ import "./styles.css"
 import { getDashboard } from "../../services/applications";
 import { useState, useEffect } from "react";
 import { useNavigate, NavLink, useOutletContext } from "react-router-dom";
-import { getApplicationStatusLabel, type DashboardResponse } from "../../types/application";
-import type { User } from "../../types/users";
+import { getApplicationStatusLabel, type DashboardResponse } from "../../types/api/application";
+import type { User } from "../../types/api/users";
 
 
 

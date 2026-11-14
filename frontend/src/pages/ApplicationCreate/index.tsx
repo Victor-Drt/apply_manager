@@ -2,20 +2,11 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import ApplicationDetailField from "../../components/ApplicationDetailField";
 import { useNavigate } from "react-router-dom";
 import { createApplication } from "../../services/applications";
-import { APPLICATION_STATUSES, isApplicationStatus, type ApplicationStatus } from "../../types/application";
+import { APPLICATION_STATUSES, isApplicationStatus, type ApplicationStatus } from "../../types/api/application";
 import "./styles.css";
+import type { ApplicationForm } from "../../types/form/applications-form";
+import { formatCurrency, parseCurrencyToNumber } from "../../utils/formatters";
 
-type ApplicationForm = {
-    jobTitle: string;
-    companyName: string;
-    source: string;
-    applicationPlatform: string;
-    jobUrl: string;
-    status: ApplicationStatus;
-    appliedAt: string;
-    notes: string;
-    salaryExpectations: number;
-}
 
 type ApplicationFormErrors = Partial<Record<keyof ApplicationForm, string>>
 
@@ -29,22 +20,6 @@ const emptyApplication: ApplicationForm = {
     appliedAt: '',
     notes: '',
     salaryExpectations: 0,
-}
-
-// Formata um número (ex: 5000.5) para exibição visual (ex: "R$ 5.000,50")
-function formatCurrency(value: number): string {
-    if (!value) return '';
-    return value.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });
-}
-
-// Extrai os dígitos digitados e converte para número decimal (ex: "R$ 5.000,50" -> 5000.5)
-function parseCurrencyToNumber(rawValue: string): number {
-    const digits = rawValue.replace(/\D/g, '');
-    if (!digits) return 0;
-    return Number(digits) / 100;
 }
 
 function isValidUrl(value: string) {

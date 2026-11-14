@@ -1,4 +1,4 @@
-import type { ApplicationCreate, ApplicationUpdate } from "../types/application"
+import type { ApplicationCreate, ApplicationUpdate } from "../types/api/application"
 import { axiosClient } from "./client"
 
 export async function getApplications(

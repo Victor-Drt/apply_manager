@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { getApplicationStatusLabel } from '../../types/application';
+import { getApplicationStatusLabel } from '../../types/api/application';
 
 export interface ApplicationRowProps {
     id: string;

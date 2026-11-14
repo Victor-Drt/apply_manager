@@ -2,7 +2,7 @@ import './styles.css'
 import ApplicationsTable from '../../components/ApplicationsTable';
 import { getApplications } from '../../services/applications';
 import { useEffect, useState } from 'react';
-import type { ApplicationResponse } from '../../types/application';
+import type { ApplicationResponse } from '../../types/api/application';
 
 
 const ApplicationsPage = () => {

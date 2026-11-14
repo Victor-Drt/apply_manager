@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import { useState, useEffect } from "react";
-import type { User } from "../../types/users";
+import type { User } from "../../types/api/users";
 import { getUser } from "../../services/users";
 
 function AppLayout() {

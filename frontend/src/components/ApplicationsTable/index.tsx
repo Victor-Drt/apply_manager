@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import ApplicationRow from '../ApplicationRow';
 import { useState } from 'react';
-import type { ApplicationResponse } from '../../types/application';
+import type { ApplicationResponse } from '../../types/api/application';
 import { getApplications } from '../../services/applications';
 
 interface ApplicationsTableProps {
