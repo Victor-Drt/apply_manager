@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { getApplicationStatusLabel } from '../../types/api/application';
+import { formatApplicationDate } from '../../utils/formatters';
 
 export interface ApplicationRowProps {
     id: string;
@@ -13,7 +14,7 @@ export interface ApplicationRowProps {
 }
 
 const ApplicationRow = ({ id, jobTitle, companyName, source, status, appliedAt }: ApplicationRowProps) => {
-    const navigate = useNavigate();
+    const navigate = useNavigate();    
 
     return (
         <tr key={id} onClick={() => navigate(`/application/${id}`)}>
@@ -21,7 +22,7 @@ const ApplicationRow = ({ id, jobTitle, companyName, source, status, appliedAt }
             <td>{companyName}</td>
             <td>{source}</td>
             <td>{getApplicationStatusLabel(status)}</td>
-            <td>{appliedAt}</td>
+            <td>{formatApplicationDate(appliedAt)}</td>
         </tr>
     )
 }

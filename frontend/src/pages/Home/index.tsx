@@ -4,24 +4,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, NavLink, useOutletContext } from "react-router-dom";
 import { getApplicationStatusLabel, type DashboardResponse } from "../../types/api/application";
 import type { User } from "../../types/api/users";
+import { formatApplicationDate } from "../../utils/formatters";
 
 
 
 const STATUS_BADGES = ['saved', 'applied', 'interview', 'rejected'] as const
 type StatusBadge = (typeof STATUS_BADGES)[number]
 
-function formatApplicationDate(value: string | null | undefined) {
-    if (!value) {
-        return ''
-    }
-
-    const date = new Date(value)
-    if (Number.isNaN(date.getTime())) {
-        return value.slice(0, 10)
-    }
-
-    return date.toLocaleDateString('pt-BR')
-}
 
 function getCompanyInitial(companyName: string | null, jobTitle: string) {
     const source = companyName?.trim() || jobTitle.trim()

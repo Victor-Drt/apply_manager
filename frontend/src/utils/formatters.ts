@@ -13,3 +13,16 @@ export function parseCurrencyToNumber(rawValue: string): number {
     if (!digits) return 0;
     return Number(digits) / 100;
 }
+
+export function formatApplicationDate(value: string | null | undefined) {
+    if (!value) {
+        return ''
+    }
+
+    const date = new Date(value)
+    if (Number.isNaN(date.getTime())) {
+        return value.slice(0, 10)
+    }
+
+    return date.toLocaleDateString('pt-BR')
+}
