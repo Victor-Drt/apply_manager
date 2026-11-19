@@ -30,7 +30,7 @@ class ApplicationStatus(str, Enum):
 
 class WorkModel(str, Enum):
     REMOTE = "remote"
-    HYBRID = "remote"
+    HYBRID = "hybrid"
     ON_SITE = "on_site"
 
 
@@ -93,7 +93,9 @@ class Application(Base):
             name="work_model",
             native_enum=False,
             values_callable=lambda enum: [item.value for item in enum],
-        )
+        ),
+        default=WorkModel.ON_SITE,
+        nullable=False,
     )
 
     applied_at: Mapped[datetime | None] = mapped_column(

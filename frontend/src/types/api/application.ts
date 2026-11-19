@@ -10,7 +10,15 @@ const APPLICATION_STATUSES = [
     { value: 'no_response', label: 'Sem resposta' },
 ] as const
 
+const APPLICATION_WORK_MODELS = [
+    { value: 'remote', label: "Remoto" },
+    { value: 'hybrid', label: "Hibrído" },
+    { value: 'on_site', label: "Presencial" },
+] as const
+
 type ApplicationStatus = (typeof APPLICATION_STATUSES)[number]['value']
+
+type ApplicationWorkModels = (typeof APPLICATION_WORK_MODELS)[number]['value']
 
 function isApplicationStatus(value: string): value is ApplicationStatus {
     return APPLICATION_STATUSES.some((status) => status.value === value)
@@ -20,6 +28,14 @@ function getApplicationStatusLabel(value: string) {
     return APPLICATION_STATUSES.find((status) => status.value === value)?.label ?? value
 }
 
+function isApplicationWorkModel(value: string): value is ApplicationWorkModels {
+    return APPLICATION_WORK_MODELS.some((work_model) => work_model.value === value)
+}
+
+function getApplicationWorkModelLabel(value: string) {
+    return APPLICATION_WORK_MODELS.find((work_model) => work_model.value === value)?.label ?? value
+}
+
 interface ApplicationResponse {
     id: number
     job_title: string
@@ -27,6 +43,8 @@ interface ApplicationResponse {
     source: string
     application_platform: string
     job_url: string
+    location: string
+    work_model: ApplicationWorkModels
     status: ApplicationStatus
     salary_expectations: number
     applied_at: string | null
@@ -41,6 +59,8 @@ interface ApplicationCreate {
     source: string
     application_platform: string
     job_url: string
+    location: string
+    work_model: ApplicationWorkModels
     status: ApplicationStatus
     applied_at: string | null
     notes: string | null
@@ -53,6 +73,8 @@ interface ApplicationUpdate {
     source?: string
     application_platform?: string
     job_url?: string
+    location?: string
+    work_model?: ApplicationWorkModels
     status?: ApplicationStatus
     applied_at?: string | null
     notes?: string | null
@@ -69,5 +91,5 @@ interface DashboardResponse {
 }
 
 
-export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate, ApplicationStatus, DashboardResponse }
-export { APPLICATION_STATUSES, isApplicationStatus, getApplicationStatusLabel }
+export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate, ApplicationStatus, DashboardResponse, ApplicationWorkModels }
+export { APPLICATION_STATUSES, APPLICATION_WORK_MODELS, isApplicationStatus, getApplicationStatusLabel, isApplicationWorkModel, getApplicationWorkModelLabel }

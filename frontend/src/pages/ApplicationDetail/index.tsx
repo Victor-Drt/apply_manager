@@ -10,9 +10,12 @@ import {
 } from "../../services/applications";
 import {
   APPLICATION_STATUSES,
+  APPLICATION_WORK_MODELS,
   isApplicationStatus,
+  isApplicationWorkModel,
   type ApplicationResponse,
   type ApplicationStatus,
+  type ApplicationWorkModels,
 } from "../../types/api/application";
 import { formatCurrency, parseCurrencyToNumber } from "../../utils/formatters";
 
@@ -23,6 +26,8 @@ type ApplicationForm = {
   applicationPlatform: string;
   jobUrl: string;
   status: ApplicationStatus;
+  workModels: ApplicationWorkModels;
+  location: string;
   appliedAt: string;
   notes: string;
   createdAt: string;
@@ -37,6 +42,8 @@ const emptyApplication: ApplicationForm = {
   source: "",
   applicationPlatform: "",
   jobUrl: "",
+  location: "",
+  workModels: "on_site",
   status: "saved",
   appliedAt: "",
   notes: "",
@@ -61,6 +68,11 @@ function toForm(application: ApplicationResponse): ApplicationForm {
     status: isApplicationStatus(application.status)
       ? application.status
       : "saved",
+    workModels: isApplicationWorkModel(application.work_model)
+      ? application.work_model
+      : "on_site",
+    location: application.location ?? "",
+
     appliedAt: toDateInputValue(application.applied_at),
     notes: application.notes ?? "",
     createdAt: toDateInputValue(application.created_at),
@@ -240,11 +252,15 @@ const ApplicationDetailPage = () => {
         job_title: application.jobTitle.trim(),
         company_name: application.companyName.trim() || null,
         source: application.source.trim(),
+        location: application.location.trim(),
         application_platform: application.applicationPlatform.trim(),
         job_url: application.jobUrl.trim(),
         status: isApplicationStatus(application.status)
           ? application.status
           : "saved",
+        work_model: isApplicationWorkModel(application.workModels)
+          ? application.workModels
+          : "on_site",
         applied_at: application.appliedAt.trim() || null,
         notes: application.notes.trim() || null,
         salary_expectations: application.salaryExpectations,
@@ -493,6 +509,29 @@ const ApplicationDetailPage = () => {
             error={fieldErrors.status}
             options={APPLICATION_STATUSES}
           />
+
+          <ApplicationDetailField
+            name="workModels"
+            label="Regime de Trabalho"
+            value={application.workModels}
+            onChange={handleChange}
+            disabled={fieldsDisabled}
+            required
+            error={fieldErrors.workModels}
+            options={APPLICATION_WORK_MODELS}
+          />
+
+          <ApplicationDetailField
+            name="location"
+            label="Local"
+            value={application.location}
+            onChange={handleChange}
+            disabled={fieldsDisabled}
+            required
+            error={fieldErrors.location}
+            maxLength={255}
+          />
+
           <ApplicationDetailField
             name="appliedAt"
             label="Data de Aplicação"

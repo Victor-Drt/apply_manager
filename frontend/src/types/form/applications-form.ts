@@ -1,4 +1,4 @@
-import type { ApplicationStatus } from "../api/application";
+import type { ApplicationStatus, ApplicationWorkModels } from "../api/application";
 
 type ApplicationForm = {
     jobTitle: string;
@@ -6,6 +6,8 @@ type ApplicationForm = {
     source: string;
     applicationPlatform: string;
     jobUrl: string;
+    location: string;
+    workModels: ApplicationWorkModels;
     status: ApplicationStatus;
     appliedAt: string;
     notes: string;
