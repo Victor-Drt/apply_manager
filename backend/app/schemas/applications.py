@@ -12,6 +12,8 @@ class Application(BaseModel):
     source: str
     application_platform: str
     job_url: str
+    work_model: str | None = None
+    location: str | None = None
     status: ApplicationStatus = ApplicationStatus.SAVED
     applied_at: datetime | None = None
     notes: str | None = None
@@ -30,10 +32,14 @@ class ApplicationUpdate(BaseModel):
     source: str | None = None
     application_platform: str | None = None
     job_url: str | None = None
+    work_model: str | None = None
+    location: str | None = None
     status: ApplicationStatus | None = None
     applied_at: datetime | None = None
     notes: str | None = None
     salary_expectations: Decimal | None = None
+    work_model: str | None = None
+    location: str | None = None
 
     model_config = ConfigDict(use_enum_values=True)
 
@@ -46,6 +52,8 @@ class ApplicationResponse(BaseModel):
     source: str
     application_platform: str
     job_url: str
+    work_model: str | None = None
+    location: str | None = None
     status: ApplicationStatus
     applied_at: datetime | None = None
     notes: str | None = None

@@ -2,7 +2,15 @@ from datetime import datetime
 from enum import Enum
 from decimal import Decimal
 
-from sqlalchemy import DateTime, Enum as SQLEnum, ForeignKey, Integer, String, Text, Numeric
+from sqlalchemy import (
+    DateTime,
+    Enum as SQLEnum,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+    Numeric,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..db.base import Base
@@ -18,6 +26,12 @@ class ApplicationStatus(str, Enum):
     REJECTED = "rejected"
     WITHDRAWN = "withdrawn"
     NO_RESPONSE = "no_response"
+
+
+class WorkModel(str, Enum):
+    REMOTE = "remote"
+    HYBRID = "remote"
+    ON_SITE = "on_site"
 
 
 class Application(Base):
@@ -69,6 +83,17 @@ class Application(Base):
         ),
         default=ApplicationStatus.SAVED,
         nullable=False,
+    )
+
+    location: Mapped[str] = mapped_column(String(255), nullable=True)
+
+    work_model: Mapped[WorkModel] = mapped_column(
+        SQLEnum(
+            WorkModel,
+            name="work_model",
+            native_enum=False,
+            values_callable=lambda enum: [item.value for item in enum],
+        )
     )
 
     applied_at: Mapped[datetime | None] = mapped_column(
