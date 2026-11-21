@@ -162,6 +162,7 @@ const ApplicationsTable = ({
           </button>
         ))}
       </div>
+      <div className="applications-table-scroll">
       <table>
         <thead>
           <tr>
@@ -209,6 +210,7 @@ const ApplicationsTable = ({
           </tbody>
         )}
       </table>
+      </div>
       <div className="applications-pagination">
         <span className="applications-pagination-info">
           {from}–{to} de {total}

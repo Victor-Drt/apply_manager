@@ -185,7 +185,23 @@
     margin-right: 16px;
   }
 
+  .application-detail,
+  .application-detail-card {
+    min-height: 0;
+  }
+
+  .application-detail-header,
+  .application-detail-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .application-detail-fields {
     grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .application-detail-action-button {
+    width: 100%;
   }
 }

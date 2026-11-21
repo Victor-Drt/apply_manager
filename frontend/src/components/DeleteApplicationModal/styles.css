@@ -90,3 +90,14 @@
   opacity: 0.45;
   cursor: default;
 }
+
+@media (max-width: 480px) {
+  .modal-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .modal-action-button {
+    width: 100%;
+  }
+}

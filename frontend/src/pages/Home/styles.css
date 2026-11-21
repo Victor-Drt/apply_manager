@@ -428,11 +428,15 @@
 
 @media (max-width: 700px) {
   .dashboard {
-    padding: 20px;
+    padding: 0;
   }
 
   .dashboard-header {
     flex-direction: column;
+  }
+
+  .dashboard-header__title {
+    font-size: 24px;
   }
 
   .dashboard-header__action {
@@ -443,7 +447,27 @@
     grid-template-columns: 1fr;
   }
 
+  .recent-applications,
+  .status-overview {
+    padding: 16px;
+  }
+
+  .section-header {
+    flex-direction: column;
+  }
+
   .application-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .application-item__info,
+  .application-item__details {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .application-item__meta {
     align-items: flex-start;
   }
 }

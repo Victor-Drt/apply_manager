@@ -392,12 +392,27 @@
 }
 
 @media (max-width: 700px), (max-height: 560px) {
+  .login {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
   .login-topbar {
+    flex-wrap: wrap;
     padding: 16px 16px 0;
+  }
+
+  .login-brand-mark {
+    width: min(168px, 58vw);
   }
 
   .login-hero {
     padding: 20px 16px 28px;
+  }
+
+  .login-hero-copy h1 {
+    font-size: clamp(28px, 9vw, 40px);
   }
 
   .login-float {
