@@ -2,6 +2,7 @@ import { startGoogleLogin, consumeOAuthCallback, getStoredAccessToken, type OAut
 import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import logo from '../../assets/logo.png'
+import ThemeToggle from '../../components/ThemeToggle'
 import './styles.css'
 
 const Login = () => {
@@ -32,9 +33,12 @@ const Login = () => {
                     <img className="login-brand-mark" src={logo} alt="Apply Manager" />
                 </div>
 
-                <button type="button" className="login-topbar-button" onClick={startGoogleLogin}>
-                    Entrar com Google
-                </button>
+                <div className="login-topbar-actions">
+                    <ThemeToggle compact />
+                    <button type="button" className="login-topbar-button" onClick={startGoogleLogin}>
+                        Entrar com Google
+                    </button>
+                </div>
             </header>
 
             <section className="login-hero">

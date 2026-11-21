@@ -5,6 +5,7 @@ import { useNavigate, NavLink, useOutletContext } from "react-router-dom";
 import type { DashboardResponse } from "../../types/api/application";
 import PlusIcon from "../../components/PlusIcon";
 import StatusBadge from "../../components/StatusBadge";
+import { BriefcaseIcon, CalendarCheckIcon, CircleXIcon, SendIcon } from "../../components/Icons";
 import type { User } from "../../types/api/users";
 import { formatApplicationDate } from "../../utils/formatters";
 
@@ -78,8 +79,8 @@ const HomePage = () => {
                                 Total
                             </span>
 
-                            <span className="summary-card__icon">
-                                #
+                            <span className="summary-card__icon" aria-hidden="true">
+                                <BriefcaseIcon />
                             </span>
                         </div>
 
@@ -98,8 +99,8 @@ const HomePage = () => {
                                 Aplicadas
                             </span>
 
-                            <span className="summary-card__icon">
-                                ↗
+                            <span className="summary-card__icon" aria-hidden="true">
+                                <SendIcon />
                             </span>
                         </div>
 
@@ -118,8 +119,8 @@ const HomePage = () => {
                                 Entrevistas
                             </span>
 
-                            <span className="summary-card__icon">
-                                ✓
+                            <span className="summary-card__icon" aria-hidden="true">
+                                <CalendarCheckIcon />
                             </span>
                         </div>
 
@@ -138,8 +139,8 @@ const HomePage = () => {
                                 Rejeitadas
                             </span>
 
-                            <span className="summary-card__icon">
-                                ×
+                            <span className="summary-card__icon" aria-hidden="true">
+                                <CircleXIcon />
                             </span>
                         </div>
 

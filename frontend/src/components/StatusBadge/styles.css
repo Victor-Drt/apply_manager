@@ -10,46 +10,46 @@
 }
 
 .status-badge--saved {
-  background: #f3f4f6;
-  color: #4b5563;
+  background: var(--badge-saved-bg);
+  color: var(--badge-saved-fg);
 }
 
 .status-badge--applied {
-  background: #eff6ff;
-  color: #2563eb;
+  background: var(--badge-applied-bg);
+  color: var(--badge-applied-fg);
 }
 
 .status-badge--interview {
-  background: #eef2ff;
-  color: #4f46e5;
+  background: var(--badge-interview-bg);
+  color: var(--badge-interview-fg);
 }
 
 .status-badge--technical_test {
-  background: #fffbeb;
-  color: #b45309;
+  background: var(--badge-test-bg);
+  color: var(--badge-test-fg);
 }
 
 .status-badge--offer {
-  background: #ecfdf5;
-  color: #059669;
+  background: var(--badge-offer-bg);
+  color: var(--badge-offer-fg);
 }
 
 .status-badge--hired {
-  background: #f0fdfa;
-  color: #0f766e;
+  background: var(--badge-hired-bg);
+  color: var(--badge-hired-fg);
 }
 
 .status-badge--rejected {
-  background: #fef2f2;
-  color: #dc2626;
+  background: var(--badge-rejected-bg);
+  color: var(--badge-rejected-fg);
 }
 
 .status-badge--withdrawn {
-  background: #f8fafc;
-  color: #475569;
+  background: var(--badge-withdrawn-bg);
+  color: var(--badge-withdrawn-fg);
 }
 
 .status-badge--no_response {
-  background: #fff7ed;
-  color: #c2410c;
+  background: var(--badge-silent-bg);
+  color: var(--badge-silent-fg);
 }

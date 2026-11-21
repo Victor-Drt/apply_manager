@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../services/auth";
+import ThemeToggle from "../ThemeToggle";
 
 
 interface NavbarProps {
@@ -62,6 +63,9 @@ const Navbar = ({ name, image, email }: NavbarProps) => {
                             </svg>
                             Candidaturas
                         </NavLink>
+                    </li>
+                    <li className="navbar-theme">
+                        <ThemeToggle />
                     </li>
                     <li className="navbar-logout">
                         <button className="logout-button" onClick={handleLogout}>

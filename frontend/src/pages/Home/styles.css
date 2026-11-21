@@ -6,7 +6,7 @@
   width: 100%;
   min-height: 100%;
   padding: 32px;
-  background: #f8fafc;
+  background: var(--bg-subtle);
 }
 
 
@@ -26,13 +26,13 @@
   margin: 0 0 6px;
   font-size: 28px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text);
 }
 
 .dashboard-header__subtitle {
   margin: 0;
   font-size: 14px;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 /* =========================
@@ -52,8 +52,8 @@
 .summary-card {
   padding: 20px;
 
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
 }
 
@@ -67,7 +67,7 @@
 .summary-card__label {
   font-size: 13px;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .summary-card__icon {
@@ -83,8 +83,14 @@
   font-size: 14px;
   font-weight: 700;
 
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--bg-muted);
+  color: var(--text-secondary);
+}
+
+.summary-card__icon svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .summary-card__value {
@@ -95,12 +101,12 @@
   line-height: 1;
   font-weight: 700;
 
-  color: #111827;
+  color: var(--text);
 }
 
 .summary-card__description {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--text-subtle);
 }
 
 
@@ -123,8 +129,8 @@
 .status-overview {
   padding: 24px;
 
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
 }
 
@@ -143,20 +149,20 @@
   font-size: 16px;
   font-weight: 650;
 
-  color: #111827;
+  color: var(--text);
 }
 
 .section-header__subtitle {
   margin: 0;
 
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--text-subtle);
 }
 
 .section-header__link {
   font-size: 13px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-secondary);
   text-decoration: none;
 }
 
@@ -182,14 +188,14 @@
 
   padding: 16px 0;
 
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--border-soft);
   cursor: pointer;
 }
 
 .applications-list-empty {
   margin: 0;
   font-size: 13px;
-  color: #9ca3af;
+  color: var(--text-subtle);
   height: auto;
 }
 
@@ -222,12 +228,12 @@
 
   border-radius: 8px;
 
-  background: #f3f4f6;
+  background: var(--bg-muted);
 
   font-size: 14px;
   font-weight: 700;
 
-  color: #374151;
+  color: var(--text-secondary);
 }
 
 .application-item__details {
@@ -244,12 +250,12 @@
   font-size: 13px;
   font-weight: 600;
 
-  color: #111827;
+  color: var(--text);
 }
 
 .application-item__company {
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--text-subtle);
 }
 
 .application-item__meta {
@@ -263,12 +269,12 @@
 
 .application-item__date {
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-subtle);
 }
 
 
 .application-item:focus-visible {
-  outline: 2px solid #c7d2fe;
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -297,35 +303,35 @@
   gap: 8px;
 
   font-size: 13px;
-  color: #4b5563;
+  color: var(--text-secondary);
 }
 
 .status-item__value {
   font-size: 13px;
-  color: #111827;
+  color: var(--text);
 }
 
 .status-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #9ca3af;
+  background: var(--chart-muted);
 }
 
 .status-dot--saved {
-  background: #9ca3af;
+  background: var(--chart-muted);
 }
 
 .status-dot--applied {
-  background: #3b82f6;
+  background: var(--chart-applied);
 }
 
 .status-dot--interview {
-  background: #6366f1;
+  background: var(--chart-interview);
 }
 
 .status-dot--rejected {
-  background: #ef4444;
+  background: var(--chart-rejected);
 }
 
 .status-item__bar {
@@ -335,7 +341,7 @@
   overflow: hidden;
 
   border-radius: 999px;
-  background: #f1f5f9;
+  background: var(--track);
 }
 
 .status-item__progress {
@@ -345,19 +351,19 @@
 }
 
 .status-item__progress--saved {
-  background: #9ca3af;
+  background: var(--chart-muted);
 }
 
 .status-item__progress--applied {
-  background: #3b82f6;
+  background: var(--chart-applied);
 }
 
 .status-item__progress--interview {
-  background: #6366f1;
+  background: var(--chart-interview);
 }
 
 .status-item__progress--rejected {
-  background: #ef4444;
+  background: var(--chart-rejected);
 }
 
 

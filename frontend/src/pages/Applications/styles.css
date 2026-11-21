@@ -1,7 +1,7 @@
 .content {
   width: 100%;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;}
 
@@ -11,8 +11,8 @@
 
 .applications-card {
   width: 100%;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -30,7 +30,7 @@
 
   padding: 22px 24px;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
 }
 
 .applications-search {
@@ -44,23 +44,23 @@
   height: 38px;
   padding: 0 12px;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 7px;
 
-  background: #ffffff;
-  color: #111827;
+  background: var(--surface);
+  color: var(--text);
 
   font-family: inherit;
   font-size: 13px;
 }
 
 .applications-search input::placeholder {
-  color: #9ca3af;
+  color: var(--text-subtle);
 }
 
 .applications-search input:focus {
   outline: none;
-  border-color: #111827;
+  border-color: var(--primary);
 }
 
 .applications-card-header h1 {
@@ -70,7 +70,7 @@
   font-weight: 650;
   line-height: 1.3;
 
-  color: #111827;
+  color: var(--text);
 }
 
 
@@ -83,7 +83,7 @@
   flex-wrap: wrap;
   gap: 8px;
   padding: 16px 24px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
 }
 
 .applications-filter-badge {
@@ -110,15 +110,15 @@
 }
 
 .applications-filter-badge--all {
-  background: #ffffff;
-  color: #374151;
-  border-color: #e5e7eb;
+  background: var(--surface);
+  color: var(--text-secondary);
+  border-color: var(--border);
 }
 
 .applications-filter-badge--all.is-active {
-  background: #111827;
-  color: #ffffff;
-  border-color: #111827;
+  background: var(--primary);
+  color: var(--on-primary);
+  border-color: var(--primary);
   box-shadow: none;
 }
 
@@ -138,20 +138,20 @@
 ======================================== */
 
 .applications-card thead {
-  background: #f9fafb;
+  background: var(--bg-sunken);
 }
 
 .applications-card th {
   height: 44px;
   padding: 0 20px;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border);
 
   font-size: 11px;
   font-weight: 600;
   line-height: 1;
 
-  color: #6b7280;
+  color: var(--text-muted);
   text-align: left;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -168,10 +168,10 @@
   height: 64px;
   padding: 0 20px;
 
-  border-bottom: 1px solid #f0f1f3;
+  border-bottom: 1px solid var(--border-soft);
 
   font-size: 13px;
-  color: #374151;
+  color: var(--text-secondary);
 
   vertical-align: middle;
 }
@@ -182,11 +182,11 @@
 }
 
 .applications-card tbody tr:hover {
-  background: #f9fafb;
+  background: var(--bg-sunken);
 }
 
 .applications-card tbody tr:focus-visible {
-  outline: 2px solid #c7d2fe;
+  outline: 2px solid var(--focus);
   outline-offset: -2px;
 }
 
@@ -197,7 +197,7 @@
 .applications-card tbody tr.applications-table-empty {
   text-align: center;
   font-size: 13px;
-  color: #374151;
+  color: var(--text-secondary);
   cursor: default;
 }
 
@@ -244,12 +244,12 @@
   min-height: 64px;
   padding: 0 20px;
 
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--border);
 }
 
 .applications-pagination-info {
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .applications-pagination-actions {
@@ -268,11 +268,11 @@
 
   padding: 0;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border);
   border-radius: 6px;
 
-  background: #ffffff;
-  color: #374151;
+  background: var(--surface);
+  color: var(--text-secondary);
 
   font-size: 18px;
   line-height: 1;
@@ -286,13 +286,13 @@
 }
 
 .applications-pagination-button:hover:not(:disabled) {
-  background: #f9fafb;
-  border-color: #d1d5db;
+  background: var(--bg-sunken);
+  border-color: var(--border-strong);
 }
 
 .applications-pagination-button:disabled {
-  color: #d1d5db;
-  background: #f9fafb;
+  color: var(--text-subtle);
+  background: var(--bg-sunken);
   cursor: not-allowed;
 }
 

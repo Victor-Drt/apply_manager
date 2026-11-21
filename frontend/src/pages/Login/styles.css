@@ -10,8 +10,8 @@
   min-height: 100vh;
   width: 100%;
   overflow: hidden;
-  background-color: #f7f8fb;
-  background-image: radial-gradient(rgba(148, 163, 184, 0.35) 1px, transparent 1px);
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--login-dot) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
@@ -25,6 +25,13 @@
 .login-float-list,
 .login-float-status {
   height: auto;
+}
+
+.login-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
 }
 
 .login-topbar {
@@ -45,7 +52,7 @@
   gap: 10px;
   font-size: 16px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text);
 }
 
 .login-brand-mark,
@@ -66,10 +73,10 @@
 .login-topbar-button {
   min-height: 40px;
   padding: 8px 16px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-strong);
   border-radius: 999px;
-  background: #ffffff;
-  color: #111827;
+  background: var(--surface);
+  color: var(--text);
   font-family: inherit;
   font-size: 13px;
   font-weight: 600;
@@ -78,8 +85,8 @@
 
 .login-topbar-button:hover,
 .login-topbar-button:focus-visible {
-  background: #f8fafc;
-  border-color: #9ca3af;
+  background: var(--bg-subtle);
+  border-color: var(--border-strong);
 }
 
 .login-hero {
@@ -114,18 +121,18 @@
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.04em;
-  color: #111827;
+  color: var(--text);
 }
 
 .login-hero-copy h1 span {
-  color: #9ca3af;
+  color: var(--text-subtle);
 }
 
 .login-hero-copy p {
   max-width: 460px;
   font-size: 16px;
   line-height: 1.6;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .login-error {
@@ -134,9 +141,9 @@
   padding: 10px 12px;
   font-size: 13px;
   font-weight: 500;
-  color: #b91c1c;
+  color: var(--danger-text);
   text-align: center;
-  background-color: #fee2e2;
+  background-color: var(--danger-soft);
   border-radius: 8px;
 }
 
@@ -149,8 +156,8 @@
   padding: 12px 22px;
   border: 0;
   border-radius: 12px;
-  background: #2563eb;
-  color: #ffffff;
+  background: var(--accent);
+  color: var(--on-accent);
   font-family: inherit;
   font-size: 15px;
   font-weight: 700;
@@ -160,11 +167,11 @@
 
 .login-cta:hover,
 .login-cta:focus-visible {
-  background: #1d4ed8;
+  background: var(--accent-hover);
 }
 
 .login-cta:focus-visible {
-  outline: 2px solid #93c5fd;
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -172,7 +179,7 @@
   width: 18px;
   height: 18px;
   flex-shrink: 0;
-  background: #ffffff;
+  background: var(--logo-plate);
   border-radius: 50%;
   padding: 2px;
 }
@@ -180,16 +187,16 @@
 .login-hint {
   font-size: 13px;
   line-height: 1.5;
-  color: #9ca3af;
+  color: var(--text-subtle);
 }
 
 .login-float {
   position: absolute;
   z-index: 1;
   pointer-events: none;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(229, 231, 235, 0.9);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  background: var(--float-surface);
+  border: 1px solid var(--float-border);
+  box-shadow: var(--float-shadow);
 }
 
 .login-float-note {
@@ -197,7 +204,7 @@
   left: 4%;
   width: 210px;
   padding: 18px 16px;
-  background: #facc15;
+  background: var(--note);
   border: 0;
   border-radius: 4px;
   transform: rotate(-8deg);
@@ -207,7 +214,7 @@
 .login-float-note p {
   font-size: 13px;
   line-height: 1.45;
-  color: #1f2937;
+  color: var(--note-ink);
 }
 
 .login-float-check {
@@ -219,7 +226,7 @@
   width: 64px;
   height: 64px;
   border-radius: 16px;
-  color: #2563eb;
+  color: var(--accent-text);
   transform: rotate(-6deg);
 }
 
@@ -249,8 +256,8 @@
   height: 36px;
   margin-bottom: 6px;
   border-radius: 12px;
-  background: #f3f4f6;
-  color: #111827;
+  background: var(--bg-muted);
+  color: var(--text);
 }
 
 .login-float-reminder-icon svg {
@@ -263,20 +270,20 @@
 .login-float-status strong {
   font-size: 13px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text);
 }
 
 .login-float-reminder span {
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-muted);
 }
 
 .login-float-reminder em {
   margin-top: 6px;
   padding: 4px 8px;
   border-radius: 999px;
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: var(--accent-soft);
+  color: var(--accent-text);
   font-size: 11px;
   font-style: normal;
   font-weight: 600;
@@ -309,24 +316,24 @@
 }
 
 .login-float-dot--applied {
-  background: #2563eb;
+  background: var(--accent);
 }
 
 .login-float-dot--interview {
-  background: #22c55e;
+  background: var(--chart-success);
 }
 
 .login-float-row p {
   font-size: 13px;
   font-weight: 600;
-  color: #111827;
+  color: var(--text);
 }
 
 .login-float-row small {
   display: block;
   margin-top: 2px;
   font-size: 11px;
-  color: #9ca3af;
+  color: var(--text-subtle);
 }
 
 .login-float-status {
@@ -350,8 +357,8 @@
 .login-float-pills span {
   padding: 5px 8px;
   border-radius: 999px;
-  background: #f3f4f6;
-  color: #4b5563;
+  background: var(--bg-muted);
+  color: var(--text-secondary);
   font-size: 11px;
   font-weight: 600;
 }
