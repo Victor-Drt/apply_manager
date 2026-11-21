@@ -1,15 +1,21 @@
+from fastapi import Request
+from datetime import datetime
+from sqlalchemy.orm import Session
+
 from app.schemas.applications import (
     Application,
     ApplicationCreate,
     ApplicationResponse,
     ApplicationUpdate,
     DashboardResponse,
+    ListApplicationResponse,
+    ApplicationResume
 )
 import app.repositories.applications as applications_repository
-from datetime import datetime
-from sqlalchemy.orm import Session
 from app.models.applications import Application as ApplicationModel
 from app.models.users import User
+from app.core.pagination import build_pagination_links
+
 
 
 def create_application(
@@ -35,6 +41,39 @@ def get_application(
     if application is None:
         return None
     return ApplicationResponse.model_validate(application)
+
+
+def list_applications_resume(
+    db: Session,
+    request: Request,
+    user_id: int,
+    offset: int,
+    limit: int,
+    status: str | None,
+    search: str | None = None,
+) -> ListApplicationResponse:
+    count = applications_repository.count_applications(db, user_id, status, search)
+
+    next_url, previous_url = build_pagination_links(request, count, limit, offset)
+
+    if count == 0:
+        applications = []
+    else:
+        applications = applications_repository.get_applications(
+            db, user_id, offset, limit, status, search
+        )
+
+    # results = [ApplicationResume.model_validate(a) for a in applications]
+
+    response = {
+        "count": count,
+        "next": next_url, 
+        "previous": previous_url,
+        "results": applications
+        
+    }
+
+    return ListApplicationResponse.model_validate(response)
 
 
 def update_application(

@@ -1,22 +1,19 @@
-import './styles.css'
+import './styles.css';
 import ApplicationsTable from '../../components/ApplicationsTable';
-import { getApplications } from '../../services/applications';
-import { useEffect, useState } from 'react';
-import type { ApplicationResponse } from '../../types/api/application';
-
+import { useState } from 'react';
+import type { ApplicationResume } from '../../types/api/application';
 
 const ApplicationsPage = () => {
-    const [applications, setApplications] = useState<ApplicationResponse[]>([])
-
-    useEffect(() => {
-        getApplications(0, 10).then(setApplications)
-    }, [])
+    const [applications, setApplications] = useState<ApplicationResume[]>([]);
 
     return (
         <main className="content">
-            <ApplicationsTable applications={applications} setApplications={setApplications} />
+            <ApplicationsTable
+                applications={applications}
+                setApplications={setApplications}
+            />
         </main>
-    )
-}
+    );
+};
 
 export default ApplicationsPage;

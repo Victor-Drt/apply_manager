@@ -1,13 +1,26 @@
-import type { ApplicationCreate, ApplicationUpdate } from "../types/api/application"
+import type { ApplicationCreate, ApplicationUpdate, ApplicationResume, ApplicationStatus, PaginatedResponse } from "../types/api/application"
 import { axiosClient } from "./client"
 
 export async function getApplications(
     offset: number = 0,
-    limit: number = 10
-) {
-    const response = await axiosClient.get(`/applications/?offset=${offset}&limit=${limit}`)
-    return response.data
+    limit: number = 10,
+    status?: ApplicationStatus,
+    search?: string
+): Promise<PaginatedResponse<ApplicationResume>> {
+    const response = await axiosClient.get<PaginatedResponse<ApplicationResume>>(
+        '/applications/',
+        {
+            params: {
+                offset,
+                limit,
+                ...(status ? { status } : {}),
+                ...(search ? { search } : {}),
+            },
+        }
+    );
+    return response.data;
 }
+
 
 export async function createApplication(
     application: ApplicationCreate

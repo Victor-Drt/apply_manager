@@ -53,6 +53,25 @@ interface ApplicationResponse {
     updated_at: string | null
 }
 
+export interface PaginatedResponse<T> {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: T[];
+}
+
+interface ApplicationResume {
+    id: number
+    job_title: string
+    company_name: string | null
+    location: string
+    work_model: ApplicationWorkModels
+    status: ApplicationStatus
+    applied_at: string | null
+    created_at: string
+    updated_at: string | null
+}
+
 interface ApplicationCreate {
     job_title: string
     company_name: string | null
@@ -91,5 +110,5 @@ interface DashboardResponse {
 }
 
 
-export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate, ApplicationStatus, DashboardResponse, ApplicationWorkModels }
+export type { ApplicationResponse, ApplicationCreate, ApplicationUpdate, ApplicationStatus, DashboardResponse, ApplicationWorkModels, ApplicationResume }
 export { APPLICATION_STATUSES, APPLICATION_WORK_MODELS, isApplicationStatus, getApplicationStatusLabel, isApplicationWorkModel, getApplicationWorkModelLabel }

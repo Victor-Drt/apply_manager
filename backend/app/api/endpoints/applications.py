@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, Request, Query
 from sqlalchemy.orm import Session
 
 import app.services.applications as applications_service
@@ -11,8 +11,9 @@ from app.schemas.applications import (
     ApplicationUpdate,
     ApplicationResponse,
     DashboardResponse,
+    ListApplicationResponse,
 )
-
+from app.models.applications import ApplicationStatus
 
 router = APIRouter()
 
@@ -29,11 +30,16 @@ def create_application(
 @router.get("/", status_code=200)
 def get_applications(
     db: Annotated[Session, Depends(get_db)],
+    request: Request,
     current_user: Annotated[User, Depends(get_current_user)],
-    offset: int = 0,
-    limit: int = 10,
-) -> list[ApplicationResponse]:
-    return applications_service.get_applications(db, current_user.id, offset, limit)
+    limit: int = Query(10, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+    status: ApplicationStatus | None = None,
+    search: str | None = Query(None, max_length=100),
+) -> ListApplicationResponse:
+    return applications_service.list_applications_resume(
+        db, request, current_user.id, offset, limit, status, search
+    )
 
 
 @router.get("/dashboard", status_code=200)

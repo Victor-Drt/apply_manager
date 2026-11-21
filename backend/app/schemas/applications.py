@@ -63,6 +63,28 @@ class ApplicationResponse(BaseModel):
 
     model_config = ConfigDict(from_attributes=True, use_enum_values=True)
 
+
+class ApplicationResume(BaseModel):
+    id: int
+    company_name: str | None = None
+    job_title: str
+    status: ApplicationStatus
+    work_model: WorkModel
+    location: str | None = None
+    applied_at: datetime | None = None
+    created_at: datetime
+    updated_at: datetime | None = None
+
+    model_config = ConfigDict(from_attributes=True, use_enum_values=True)
+
+
+class ListApplicationResponse(BaseModel):
+    count: int
+    next: str | None
+    previous: str | None
+    results: list[ApplicationResume]
+
+
 class DashboardResponse(BaseModel):
     total_applications: int
     saved_applications: int

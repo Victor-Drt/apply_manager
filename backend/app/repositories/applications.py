@@ -1,8 +1,31 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import update
+from sqlalchemy import or_, update
 from ..models.applications import Application
 from ..models.users import User
 from ..models.applications import ApplicationStatus
+
+
+def _applications_query(
+    db: Session, user_id: int, status: str | None, search: str | None
+):
+    query = db.query(Application).filter(Application.user_id == user_id)
+
+    if status:
+        query = query.filter(Application.status == status)
+
+    term = search.strip() if search else ""
+    if term:
+        escaped = term.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+        pattern = f"%{escaped}%"
+        query = query.filter(
+            or_(
+                Application.job_title.ilike(pattern, escape="\\"),
+                Application.company_name.ilike(pattern, escape="\\"),
+                Application.location.ilike(pattern, escape="\\"),
+            )
+        )
+
+    return query
 
 
 def create_application(db: Session, application: Application) -> Application:
@@ -13,15 +36,38 @@ def create_application(db: Session, application: Application) -> Application:
 
 
 def get_applications(
-    db: Session, user_id: int, offset: int, limit: int
+    db: Session,
+    user_id: int,
+    offset: int,
+    limit: int,
+    status: str | None = None,
+    search: str | None = None,
 ) -> list[Application]:
-    return (
-        db.query(Application)
-        .filter(Application.user_id == user_id)
+
+    query = _applications_query(db, user_id, status, search)
+
+    items = (
+        query.order_by(
+            Application.updated_at.desc().nullslast(),
+            Application.applied_at.desc().nullslast(),
+            Application.created_at.desc(),
+        )
         .offset(offset)
         .limit(limit)
         .all()
     )
+
+    return items
+
+
+def count_applications(
+    db: Session,
+    user_id: int,
+    status: str | None = None,
+    search: str | None = None,
+) -> int:
+    return _applications_query(db, user_id, status, search).count()
+
 
 
 def get_application(
