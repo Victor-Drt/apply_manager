@@ -156,7 +156,7 @@ const ApplicationCreatePage = () => {
   };
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
 
@@ -202,7 +202,7 @@ const ApplicationCreatePage = () => {
         <div className="application-create-fields">
           <ApplicationDetailField
             name="jobTitle"
-            label="Titulo da Vaga"
+            label="Título da vaga"
             value={application.jobTitle}
             onChange={handleChange}
             required
@@ -237,7 +237,7 @@ const ApplicationCreatePage = () => {
           />
           <ApplicationDetailField
             name="jobUrl"
-            label="Link da Vaga"
+            label="Link da vaga"
             value={application.jobUrl}
             wide
             onChange={handleChange}
@@ -257,7 +257,7 @@ const ApplicationCreatePage = () => {
           />
           <ApplicationDetailField
             name="appliedAt"
-            label="Data de Aplicação"
+            label="Data de aplicação"
             value={application.appliedAt}
             onChange={handleChange}
             error={fieldErrors.appliedAt}
@@ -266,7 +266,7 @@ const ApplicationCreatePage = () => {
 
           <ApplicationDetailField
             name="workModels"
-            label="Regime de Trabalho"
+            label="Regime de trabalho"
             value={application.workModels}
             onChange={handleChange}
             required
@@ -285,7 +285,7 @@ const ApplicationCreatePage = () => {
 
           <ApplicationDetailField
             name="salaryExpectations"
-            label="Pretensão Salarial"
+            label="Pretensão salarial"
             value={formatCurrency(application.salaryExpectations)}
             required
             error={fieldErrors.salaryExpectations}
@@ -298,6 +298,7 @@ const ApplicationCreatePage = () => {
             label="Notas"
             value={application.notes}
             wide
+            multiline
             onChange={handleChange}
           />
         </div>
@@ -307,14 +308,14 @@ const ApplicationCreatePage = () => {
         <div className="application-create-actions">
           <button
             type="button"
-            className="application-create-action-button"
+            className="btn btn-secondary"
             onClick={handleCancel}
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="application-create-action-button application-create-action-button--primary"
+            className="btn btn-primary"
             disabled={isLoading}
           >
             {isLoading ? "Salvando..." : "Criar candidatura"}

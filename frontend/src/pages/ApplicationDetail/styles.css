@@ -201,7 +201,7 @@
     overflow: visible;
   }
 
-  .application-detail-action-button {
+  .application-detail-actions .btn {
     width: 100%;
   }
 }

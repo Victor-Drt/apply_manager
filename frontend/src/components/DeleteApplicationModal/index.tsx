@@ -18,8 +18,8 @@ const DeleteApplicationModal = ({ onDelete, onCancel }: DeleteApplicationModalPr
                 <h2 id="delete-application-title" className="modal-title">Excluir candidatura</h2>
                 <p className="modal-description">Essa ação não pode ser desfeita. Deseja excluir esta candidatura?</p>
                 <div className="modal-actions">
-                    <button type="button" className="modal-action-button" onClick={onCancel}>Cancelar</button>
-                    <button type="button" className="modal-action-button modal-action-button--danger" onClick={onDelete}>Excluir</button>
+                    <button type="button" className="btn btn-secondary" onClick={onCancel}>Cancelar</button>
+                    <button type="button" className="btn btn-danger" onClick={onDelete}>Excluir</button>
                 </div>
             </div>
         </div>

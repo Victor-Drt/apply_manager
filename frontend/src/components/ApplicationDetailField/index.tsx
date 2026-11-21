@@ -16,8 +16,9 @@ export interface ApplicationDetailFieldProps {
     required?: boolean;
     inputType?: string;
     maxLength?: number;
+    multiline?: boolean;
     options?: readonly ApplicationDetailFieldOption[];
-    onChange?: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    onChange?: (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
 }
 
 const ApplicationDetailField = ({
@@ -30,6 +31,7 @@ const ApplicationDetailField = ({
     required = false,
     inputType = 'text',
     maxLength,
+    multiline = false,
     options,
     onChange,
 }: ApplicationDetailFieldProps) => {
@@ -62,6 +64,21 @@ const ApplicationDetailField = ({
                         </option>
                     ))}
                 </select>
+            ) : multiline ? (
+                <textarea
+                    id={fieldId}
+                    name={fieldName}
+                    rows={4}
+                    placeholder={label}
+                    disabled={disabled}
+                    value={value}
+                    onChange={onChange}
+                    required={required}
+                    maxLength={maxLength}
+                    aria-invalid={Boolean(error)}
+                    aria-describedby={error ? errorId : undefined}
+                    className={fieldClassName}
+                />
             ) : (
                 <input
                     id={fieldId}

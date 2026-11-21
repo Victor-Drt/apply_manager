@@ -163,7 +163,7 @@
     overflow: visible;
   }
 
-  .application-create-action-button {
+  .application-create-actions .btn {
     width: 100%;
   }
 }

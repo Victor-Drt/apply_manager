@@ -2,23 +2,17 @@ import "./styles.css"
 import { getDashboard } from "../../services/applications";
 import { useState, useEffect } from "react";
 import { useNavigate, NavLink, useOutletContext } from "react-router-dom";
-import { getApplicationStatusLabel, type DashboardResponse } from "../../types/api/application";
+import type { DashboardResponse } from "../../types/api/application";
+import PlusIcon from "../../components/PlusIcon";
+import StatusBadge from "../../components/StatusBadge";
 import type { User } from "../../types/api/users";
 import { formatApplicationDate } from "../../utils/formatters";
 
 
 
-const STATUS_BADGES = ['saved', 'applied', 'interview', 'rejected'] as const
-type StatusBadge = (typeof STATUS_BADGES)[number]
-
-
 function getCompanyInitial(companyName: string | null, jobTitle: string) {
     const source = companyName?.trim() || jobTitle.trim()
     return source ? source.charAt(0).toUpperCase() : '?'
-}
-
-function getStatusModifier(status: string): StatusBadge {
-    return STATUS_BADGES.includes(status as StatusBadge) ? status as StatusBadge : 'saved'
 }
 
 function getStatusPercent(count: number, total: number) {
@@ -56,7 +50,7 @@ const HomePage = () => {
             <header className="dashboard-header">
                 <div className="dashboard-header__content">
                     <h1 className="dashboard-header__title">
-                        Olá, {user?.name}
+                        Olá{user?.name ? `, ${user.name}` : ''}
                     </h1>
 
                     <p className="dashboard-header__subtitle">
@@ -65,15 +59,10 @@ const HomePage = () => {
                 </div>
 
                 <button
-                    type="button" className="dashboard-header__action"
+                    type="button"
+                    className="btn btn-primary"
                     onClick={() => navigate('/application/create')}>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        width="24" height="12" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round"
-                        className="lucide lucide-plus preview-icon">
-                        <path d="M5 12h14" /><path d="M12 5v14" />
-                    </svg>
+                    <PlusIcon />
                     Nova candidatura
                 </button>
 
@@ -187,14 +176,21 @@ const HomePage = () => {
 
                     <div className="applications-list">
                         {recentApplications.length > 0 ? recentApplications.map((application) => {
-                            const statusModifier = getStatusModifier(application.status)
                             const applicationDate = formatApplicationDate(application.applied_at || application.created_at)
+                            const openApplication = () => navigate(`/application/${application.id}`)
 
                             return (
                                 <article
                                     key={application.id}
                                     className="application-item"
-                                    onClick={() => navigate(`/application/${application.id}`)}
+                                    tabIndex={0}
+                                    onClick={openApplication}
+                                    onKeyDown={(event) => {
+                                        if (event.key === 'Enter' || event.key === ' ') {
+                                            event.preventDefault()
+                                            openApplication()
+                                        }
+                                    }}
                                 >
                                     <div className="application-item__info">
                                         <div className="application-item__company-icon">
@@ -213,9 +209,7 @@ const HomePage = () => {
                                     </div>
 
                                     <div className="application-item__meta">
-                                        <span className={`application-status application-status--${statusModifier}`}>
-                                            {getApplicationStatusLabel(application.status)}
-                                        </span>
+                                        <StatusBadge status={application.status} />
 
                                         {applicationDate ? (
                                             <time className="application-item__date" dateTime={application.applied_at || application.created_at}>

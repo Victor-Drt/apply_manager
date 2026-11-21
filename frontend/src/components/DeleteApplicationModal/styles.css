@@ -49,55 +49,13 @@
   margin-top: 8px;
 }
 
-.modal-action-button {
-  min-height: 38px;
-  padding: 0 14px;
-  border: 1px solid #e5e7eb;
-  border-radius: 7px;
-  background: #ffffff;
-  color: #374151;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.modal-action-button:hover,
-.modal-action-button:focus-visible {
-  background: #f3f4f6;
-  border-color: #d1d5db;
-}
-
-.modal-action-button--danger {
-  border-color: #dc2626;
-  background: #dc2626;
-  color: #ffffff;
-}
-
-.modal-action-button--danger:hover,
-.modal-action-button--danger:focus-visible {
-  background: #b91c1c;
-  border-color: #b91c1c;
-  color: #ffffff;
-}
-
-.modal-action-button:focus-visible {
-  outline: 2px solid #c7d2fe;
-  outline-offset: 2px;
-}
-
-.modal-action-button:disabled {
-  opacity: 0.45;
-  cursor: default;
-}
-
 @media (max-width: 480px) {
   .modal-actions {
     flex-direction: column-reverse;
     align-items: stretch;
   }
 
-  .modal-action-button {
+  .modal-actions .btn {
     width: 100%;
   }
 }

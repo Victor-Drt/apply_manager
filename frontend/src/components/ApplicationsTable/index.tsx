@@ -5,6 +5,7 @@ import {
   type ApplicationStatus,
 } from "../../types/api/application";
 import { getApplications } from "../../services/applications";
+import PlusIcon from "../PlusIcon";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -116,24 +117,10 @@ const ApplicationsTable = ({
         </div>
         <button
           type="button"
-          className="applications-create-button"
+          className="btn btn-primary"
           onClick={() => navigate("/application/create")}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-plus preview-icon"
-          >
-            <path d="M5 12h14" />
-            <path d="M12 5v14" />
-          </svg>
+          <PlusIcon />
           Nova candidatura
         </button>
       </div>
@@ -150,7 +137,7 @@ const ApplicationsTable = ({
           <button
             key={status.value}
             type="button"
-            className={`applications-filter-badge applications-status--${status.value}${statusFilter === status.value ? " is-active" : ""}`}
+            className={`applications-filter-badge status-badge status-badge--${status.value}${statusFilter === status.value ? " is-active" : ""}`}
             aria-pressed={statusFilter === status.value}
             onClick={() =>
               handleStatusFilter(

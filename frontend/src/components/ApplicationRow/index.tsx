@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { getApplicationStatusLabel } from '../../types/api/application';
 import { formatApplicationDate } from '../../utils/formatters';
+import StatusBadge from '../StatusBadge';
 
 export interface ApplicationRowProps {
     id: string;
@@ -35,17 +35,25 @@ const ApplicationRow = ({
 
     // Prioriza a última atualização; se não houver, usa data de aplicação ou criação
     const lastDate = updatedAt || appliedAt || createdAt;
+    const openApplication = () => navigate(`/application/${id}`);
 
     return (
-        <tr onClick={() => navigate(`/application/${id}`)}>
+        <tr
+            tabIndex={0}
+            onClick={openApplication}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openApplication();
+                }
+            }}
+        >
             <td>{jobTitle}</td>
             <td>{companyName || '—'}</td>
             <td>{location || '—'}</td>
             <td>{WORK_MODEL_LABELS[workModel] || workModel}</td>
             <td>
-                <span className={`applications-status-badge applications-status--${status}`}>
-                    {getApplicationStatusLabel(status)}
-                </span>
+                <StatusBadge status={status} />
             </td>
             <td>{formatApplicationDate(lastDate)}</td>
         </tr>

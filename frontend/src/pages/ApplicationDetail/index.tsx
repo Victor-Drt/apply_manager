@@ -287,7 +287,7 @@ const ApplicationDetailPage = () => {
   };
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target;
 
@@ -450,7 +450,7 @@ const ApplicationDetailPage = () => {
         >
           <ApplicationDetailField
             name="jobTitle"
-            label="Titulo da Vaga"
+            label="Título da vaga"
             value={application.jobTitle}
             onChange={handleChange}
             disabled={fieldsDisabled}
@@ -489,7 +489,7 @@ const ApplicationDetailPage = () => {
           />
           <ApplicationDetailField
             name="jobUrl"
-            label="Link da Vaga"
+            label="Link da vaga"
             value={application.jobUrl}
             wide
             onChange={handleChange}
@@ -512,7 +512,7 @@ const ApplicationDetailPage = () => {
 
           <ApplicationDetailField
             name="workModels"
-            label="Regime de Trabalho"
+            label="Regime de trabalho"
             value={application.workModels}
             onChange={handleChange}
             disabled={fieldsDisabled}
@@ -534,7 +534,7 @@ const ApplicationDetailPage = () => {
 
           <ApplicationDetailField
             name="appliedAt"
-            label="Data de Aplicação"
+            label="Data de aplicação"
             value={application.appliedAt}
             onChange={handleChange}
             disabled={fieldsDisabled}
@@ -546,18 +546,19 @@ const ApplicationDetailPage = () => {
             label="Notas"
             value={application.notes}
             wide
+            multiline
             onChange={handleChange}
             disabled={fieldsDisabled}
           />
           <ApplicationDetailField
             name="createdAt"
-            label="Data de Criação"
+            label="Data de criação"
             value={application.createdAt}
             disabled
           />
           <ApplicationDetailField
             name="salaryExpectations"
-            label="Pretensão Salarial"
+            label="Pretensão salarial"
             value={formatCurrency(application.salaryExpectations)}
             required
             error={fieldErrors.salaryExpectations}
@@ -578,7 +579,7 @@ const ApplicationDetailPage = () => {
         <div className="application-detail-actions">
           <button
             type="button"
-            className="application-detail-action-button"
+            className="btn btn-secondary"
             onClick={handleCancel}
             disabled={isSaving}
             hidden={!isEditing}
@@ -587,7 +588,7 @@ const ApplicationDetailPage = () => {
           </button>
           <button
             type="button"
-            className="application-detail-action-button application-detail-action-button--primary"
+            className="btn btn-primary"
             onClick={() => {
               void persistApplication();
             }}
@@ -598,7 +599,7 @@ const ApplicationDetailPage = () => {
           </button>
           <button
             type="button"
-            className="application-detail-action-button application-detail-action-button--danger"
+            className="btn btn-danger"
             onClick={handleDelete}
             disabled={actionsDisabled}
             hidden={isEditing}
@@ -607,7 +608,7 @@ const ApplicationDetailPage = () => {
           </button>
           <button
             type="button"
-            className="application-detail-action-button application-detail-action-button--primary"
+            className="btn btn-primary"
             onClick={handleEdit}
             disabled={actionsDisabled}
             hidden={isEditing}

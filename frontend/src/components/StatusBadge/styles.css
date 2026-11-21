@@ -1,0 +1,55 @@
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.status-badge--saved {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.status-badge--applied {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.status-badge--interview {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.status-badge--technical_test {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+.status-badge--offer {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.status-badge--hired {
+  background: #f0fdfa;
+  color: #0f766e;
+}
+
+.status-badge--rejected {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.status-badge--withdrawn {
+  background: #f8fafc;
+  color: #475569;
+}
+
+.status-badge--no_response {
+  background: #fff7ed;
+  color: #c2410c;
+}

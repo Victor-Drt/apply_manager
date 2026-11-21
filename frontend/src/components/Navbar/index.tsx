@@ -29,20 +29,8 @@ const Navbar = ({ name, image, email }: NavbarProps) => {
         <aside className="navbar">
             <div className="profile-card-row">
                 <img className="profile-image" src={image ? image : imageUrl} alt="Profile" />
-                <h2 className="profile-name">{name}</h2>
+                <h2 className="profile-name">{name || 'Usuário'}</h2>
                 <p className="profile-email">{email}</p>
-                <button className="profile-button">
-                    <i className="fa-solid fa-bars">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            width="24" height="24" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" strokeLinecap="round"
-                            className="lucide lucide-ellipsis-vertical preview-icon">
-                            <circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1"
-                            />
-                        </svg>
-                    </i>
-                </button>
             </div>
             <nav className="navbar-list">
                 <h2 className="navbar-title">Menu</h2>
@@ -75,9 +63,11 @@ const Navbar = ({ name, image, email }: NavbarProps) => {
                             Candidaturas
                         </NavLink>
                     </li>
-                    <button className="logout-button" onClick={handleLogout}>
-                        Sair
-                    </button>
+                    <li className="navbar-logout">
+                        <button className="logout-button" onClick={handleLogout}>
+                            Sair
+                        </button>
+                    </li>
                 </ul>
             </nav>
         </aside>
