@@ -1,8 +1,8 @@
 import { startGoogleLogin, consumeOAuthCallback, getStoredAccessToken, type OAuthCallbackResult } from '../../services/auth'
 import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
-import logo from '../../assets/logo.png'
 import ThemeToggle from '../../components/ThemeToggle'
+import Brand from '../../components/Brand'
 import './styles.css'
 
 const Login = () => {
@@ -30,7 +30,7 @@ const Login = () => {
         <main className="login">
             <header className="login-topbar">
                 <div className="login-brand">
-                    <img className="login-brand-mark" src={logo} alt="Apply Manager" />
+                    <Brand size="topbar" />
                 </div>
 
                 <div className="login-topbar-actions">
@@ -93,7 +93,7 @@ const Login = () => {
                 </div>
 
                 <div className="login-hero-copy">
-                    <img className="login-hero-mark" src={logo} alt="" />
+                    <Brand size="hero" />
                     <h1>
                         Organize, acompanhe e avance
                         <span>tudo em um só lugar</span>

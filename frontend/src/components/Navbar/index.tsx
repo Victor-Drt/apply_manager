@@ -1,7 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../services/auth";
 import ThemeToggle from "../ThemeToggle";
+import Brand from "../Brand";
 
 
 interface NavbarProps {
@@ -28,13 +29,15 @@ const Navbar = ({ name, image, email }: NavbarProps) => {
 
     return (
         <aside className="navbar">
+            <Link to="/home" className="navbar-brand" aria-label="Minha Vaga">
+                <Brand />
+            </Link>
             <div className="profile-card-row">
                 <img className="profile-image" src={image ? image : imageUrl} alt="Profile" />
                 <h2 className="profile-name">{name || 'Usuário'}</h2>
                 <p className="profile-email">{email}</p>
             </div>
-            <nav className="navbar-list">
-                <h2 className="navbar-title">Menu</h2>
+            <nav className="navbar-list" aria-label="Principal">
                 <ul className="navbar-list-items">
                     <li>
                         <NavLink to="/home">

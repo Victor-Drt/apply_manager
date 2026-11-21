@@ -55,20 +55,6 @@
   color: var(--text);
 }
 
-.login-brand-mark,
-.login-hero-mark {
-  display: block;
-  height: auto;
-  object-fit: contain;
-}
-
-.login-brand-mark {
-  width: 168px;
-}
-
-.login-hero-mark {
-  width: 240px;
-}
 
 .login-topbar-button {
   min-height: 40px;
@@ -410,8 +396,8 @@
     padding: 16px 16px 0;
   }
 
-  .login-brand-mark {
-    width: min(168px, 58vw);
+  .brand--hero .brand__name {
+    font-size: clamp(22px, 7vw, 28px);
   }
 
   .login-hero {
